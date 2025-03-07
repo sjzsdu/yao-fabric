@@ -1,0 +1,386 @@
+{
+  "name": "员工管理",
+  "rule": "sys_user",
+  "action": {
+    "bind": { 
+      "model": "admin.user", 
+      "option": { 
+        "form": "admin.user",
+        "withs": { 
+            "ut": {
+              "query": { "select": ["user_id", "department_id"]}
+          } 
+        }
+      } 
+    },
+    "search": {
+      "default": [
+        {
+          "withs": { 
+            "ut": {
+              "query": { "select": ["user_id", "department_id"]}
+            } 
+          },
+          "orders": [
+            {
+              "column": "id",
+              "option": "asc"
+            }
+          ]
+        },
+        1,
+        10
+      ]
+    }
+  },
+  "config": {
+    "full": false
+  },
+  "layout": {
+    "primary": "id",
+    "header": {
+      "preset": {}
+    },
+    "filter": {
+      "columns": [
+        {
+          "name": "类型",
+          "width": 4
+        },
+        {
+          "name": "手机号",
+          "width": 4
+        },
+        {
+          "name": "邮箱",
+          "width": 4
+        },
+        {
+          "name": "部门",
+          "width": 4
+        },
+        {
+          "name": "角色",
+          "width": 4
+        }
+      ],
+      "actions": [
+        {
+          "title": "添加员工",
+          "icon": "icon-plus",
+          "width": 3,
+          "props": {
+            "rule_id": "sys_user_add"
+          },
+          "action": [
+            {
+              "name": "add",
+              "type": "Common.openModal",
+              "payload": {
+                "width": 1000,
+                "Form": {
+                  "type": "edit",
+                  "model": "admin.user"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "table": {
+      "columns": [
+        {
+          "name": "ID",
+          "width": 100
+        },
+        {
+          "name": "姓名",
+          "width": 100
+        },
+        {
+          "name": "部门",
+          "width": 100
+        },
+        {
+          "name": "角色",
+          "width": 100
+        },
+        {
+          "name": "类型",
+          "width": 100
+        },
+        {
+          "name": "邮箱",
+          "width": 150
+        },
+        {
+          "name": "手机号",
+          "width": 100
+        },
+        {
+          "name": "身份证",
+          "width": 150
+        },
+        {
+          "name": "状态",
+          "width": 100
+        },
+        {
+          "name": "创建时间",
+          "width": 100
+        }
+      ],
+      "operation": {
+        "fold": false,
+        "width": 100,
+        "actions": [
+          {
+            "title": "查看",
+            "icon": "icon-eye",
+            "action": [
+              {
+                "name": "view",
+                "type": "Common.openModal",
+                "payload": {
+                  "Form": { "type": "view", "model": "admin.user" }
+                }
+              }
+            ]
+          },
+          {
+            "title": "编辑",
+            "icon": "icon-edit-2",
+            "props": {
+              "rule_id": "sys_user_edit"
+            },
+            "action": [
+              {
+                "name": "edit",
+                "type": "Common.openModal",
+                "payload": {
+                  "Form": { "type": "edit", "model": "admin.modifyUser" }
+                }
+              }
+            ],
+            "disabled": {
+              "value": "admin",
+              "field": "type"
+            }
+          },
+          {
+            "title": "重置密码",
+            "icon": "icon-key",
+            "props": {
+              "rule_id": "sys_user_reset"
+            },
+            "action": [
+              {
+                "name": "reset",
+                "type": "Common.openModal",
+                "payload": {
+                  "Form": { "type": "edit", "model": "admin.resetPassword" },
+                  "width": 450,
+                }
+              }
+            ],
+            "disabled": {
+              "value": "admin",
+              "field": "type"
+            }
+          },
+          {
+            "icon": "icon-trash-2",
+            "action": [
+              {
+                "name": "del",
+                "type": "Table.delete",
+                "payload": {}
+              }
+            ],
+            "props": {
+              "rule_id": "sys_user_del"
+            },
+            "style": "danger",
+            "confirm": {
+              "title": "提示",
+              "desc": "确认删除，删除后数据无法恢复？"
+            },
+            "title": "删除",
+            "disabled": {
+              "value": "admin",
+              "field": "type"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "fields": {
+    "filter": {
+      "姓名": {
+        "bind": "where.name.match",
+        "edit": {
+          "type": "Input",
+          "compute": "Trim",
+          "props": {}
+        }
+      },
+      "邮箱": {
+        "bind": "where.email.match",
+        "edit": {
+          "type": "Input",
+          "compute": "Trim",
+          "props": {}
+        }
+      },
+      "手机号": {
+        "bind": "where.mobile.match",
+        "edit": {
+          "type": "Input",
+          "compute": "Trim",
+          "props": {}
+        }
+      },
+      "类型": {
+        "bind": "where.type.eq",
+        "edit": {
+          "type": "Select",
+          "props": {
+            "options": [
+              { "label": "管理员", "value": "admin" },
+              { "label": "员工", "value": "staff" },
+              { "label": "用户", "value": "user" },
+              { "label": "机器人", "value": "robot" }
+            ]
+          }
+        }
+      },
+      "部门": {
+        "bind": "where.department_ids.jsoncontains",
+        "edit": {
+          "type": "TreeSelect",
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.department.TreeSelect",
+                "query": {}
+              }
+            }
+          }
+        }
+      },
+      "角色": {
+        "bind": "where.role_ids.jsoncontains",
+        "edit": {
+          "type": "Select",
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.role.Select",
+                "query": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "ID": {
+        "bind": "id",
+        "view": {
+          "type": "Text"
+        }
+      },
+      "姓名": {
+        "bind": "name",
+        "view": {
+          "type": "Text"
+        }
+      },
+      "部门": {
+        "bind": "department_ids",
+        "view": {
+          "type": "Tag",
+          "props": {
+            "multiple": true,
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.department.Select",
+                "query": {}
+              }
+            }
+          }
+        }
+      },
+      "角色": {
+        "bind": "role_ids",
+        "view": {
+          "type": "Tag",
+          "props": {
+            "multiple": true,
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.role.Select",
+                "query": {}
+              }
+            }
+          }
+        }
+      },
+      "邮箱": {
+        "bind": "email",
+        "view": {
+          "type": "A",
+          "props": {
+            "href": "mailto"
+          }
+        }
+      },
+      "手机号": {
+        "bind": "mobile",
+        "view": {
+          "type": "Text"
+        }
+      },
+      "身份证": {
+        "bind": "idcard",
+        "view": {
+          "type": "Text"
+        }
+      },
+      "创建时间": {
+        "bind": "created_at",
+        "view": {
+          "type": "Text"
+        }
+      },
+      "类型": {
+        "bind": "type",
+        "view": {
+          "type": "Tag",
+          "props": {
+            "options": [
+              { "label": "管理员", "value": "admin" },
+              { "label": "员工", "value": "staff" },
+              { "label": "用户", "value": "user" },
+              { "label": "机器人", "value": "robot" }
+            ]
+          }
+        }
+      },
+      "状态": {
+        "bind": "status",
+        "view": {
+          "type": "Switch",
+          "props": {
+            "checkedValue": "enabled",
+            "unCheckedValue": "disabled",
+            "checkedChildren": "有效",
+            "unCheckedChildren": "无效"
+          }
+        }
+      }
+    }
+  }
+}

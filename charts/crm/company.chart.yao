@@ -1,0 +1,139 @@
+{
+  "name": "CRM总览",
+  "action": {
+    "data": { "process": "scripts.crm.dashboard.Data" }
+  },
+  "layout": {
+    "operation": { "actions": [] },
+    "filter": {
+      "columns": [{ "name": "日期区间", "width": 6 }]
+    },
+    "chart": {
+      "columns": [
+        { "name": "公司数量", "width": 6 },
+        { "name": "联系人数量", "width": 6 },
+        { "name": "公海数量", "width": 6 },
+        { "name": "跟进次数", "width": 6 },
+        { "name": "按员工", "width": 12 },
+        { "name": "按地区", "width": 12 },
+        { "name": "近期新增公司趋势", "width": 24 },
+        { "name": "近期跟进趋势", "width": 24 }
+      ]
+    }
+  },
+  "fields": {
+    "filter": {
+      "日期区间": {
+        "bind": "range",
+        "edit": { "type": "RangePicker", "props": {} }
+      }
+    },
+    "chart": {
+      "跟进次数": {
+        "bind": "跟进次数",
+        "link": "/x/Table/crm.follow",
+        "view": { "type": "Number", "props": { "unit": "个" } }
+      },
+      "公海数量": {
+        "bind": "公海数量",
+        "link": "/x/Table/crm.pool",
+        "view": { "type": "Number", "props": { "unit": "个" } }
+      },
+      "公司数量": {
+        "bind": "公司数量",
+        "link": "/x/Table/crm.company",
+        "view": { "type": "Number", "props": { "unit": "个" } }
+      },
+      "联系人数量": {
+        "bind": "联系人数量",
+        "link": "/x/Table/crm.person",
+        "view": { "type": "Number", "props": { "unit": "个" } }
+      },
+      "按员工": {
+        "bind": "按员工",
+        "link": "/x/Table/crm.company",
+        "view": {
+          "type": "Pie",
+          "props": {
+            "height": 240,
+            "nameKey": "类别",
+            "series": [
+              {
+                "valueKey": "数量",
+                "roseType": "area",
+                "radius": [10, 100],
+                "center": ["60%", "50%"],
+                "itemStyle": { "borderRadius": 6 }
+              }
+            ]
+          }
+        }
+      },
+      "按地区": {
+        "bind": "按地区",
+        "link": "/x/Table/crm.company",
+        "view": {
+          "type": "Pie",
+          "props": {
+            "height": 240,
+            "nameKey": "类别",
+            "series": [
+              {
+                "valueKey": "数量",
+                "roseType": "area",
+                "radius": [10, 100],
+                "center": ["60%", "50%"],
+                "itemStyle": { "borderRadius": 6 }
+              }
+            ]
+          }
+        }
+      },
+      "近期新增公司趋势": {
+        "bind": "近期新增公司趋势",
+        "link": "/x/Table/crm.company",
+        "view": {
+          "type": "Bar",
+          "props": {
+            "height": 240,
+            "nameKey": "日期",
+            "axisLabel": { "interval": 0, "fontSize": 12 },
+            "series": [
+              {
+                "valueKey": "数量",
+                "type": "bar",
+                "colorBy": "data",
+                "itemStyle": { "borderRadius": 6 },
+                "splitLine": { "show": false },
+                "axisLabel": { "show": false }
+              }
+            ]
+          }
+        }
+      },
+      "近期跟进趋势": {
+        "bind": "近期跟进趋势",
+        "link": "/x/Table/crm.follow",
+        "view": {
+          "type": "Bar",
+          "props": {
+            "height": 240,
+            "nameKey": "日期",
+            "axisLabel": { "interval": 0, "fontSize": 12 },
+            "series": [
+              {
+                "valueKey": "数量",
+                "type": "bar",
+                "colorBy": "data",
+                "itemStyle": { "borderRadius": 6 },
+                "splitLine": { "show": false },
+                "axisLabel": { "show": false }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "config": { "full": false }
+}

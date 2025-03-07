@@ -1,0 +1,10 @@
+Fabric Management: 面料管理
+Name: 面料名称
+Width: 门幅
+Width Unit: 门幅单位
+Width Unit Comment: 门幅单位 cm 厘米 in 英尺
+Weight: 克重
+Weight Unit: 克重单位
+Weight Unit Comment: 克重单位 cm 厘米 in 英尺
+Name Description: 面料名称，可以使用公司比较规范的命名方式
+Category Id: 分类ID

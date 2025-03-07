@@ -1,0 +1,60 @@
+
+
+{
+  "name": "修改用户",
+  "action": {
+    "bind": {
+      "form": "admin.user",
+      "option": {}
+    },
+    "after:save": "scripts.admin.user.AfterSave",
+    "before:save": "scripts.admin.user.BeforeSave"
+  },
+  "layout": {
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "name": "姓名",
+              "width": 12
+            },
+            {
+              "name": "类型",
+              "width": 12
+            },
+            {
+              "name": "部门",
+              "width": 12
+            },
+            {
+              "name": "角色",
+              "width": 12
+            },
+            {
+              "name": "邮箱",
+              "width": 12
+            },
+            {
+              "name": "手机号",
+              "width": 12
+            },
+            {
+              "name": "身份证号",
+              "width": 12
+            },
+            {
+              "name": "扩展信息",
+              "width": 12
+            },
+            {
+              "name": "状态",
+              "width": 12
+            }
+          ]
+        }
+      ],
+      "props": {}
+    }
+  }
+}

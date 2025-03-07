@@ -1,0 +1,27 @@
+{
+    "name": "部门树",
+    "nodes": [
+      {
+        "name": "array",
+        "process": "models.admin.department.Get",
+        "args": [{
+            "wheres": [
+                { "column": "deleted_at", "op": "eq", "value": null }
+            ],
+            "withs": { 
+                "parent": { "select": ["id", "name"]}, 
+                "leader": {"select": ["id", "name"]}
+            }
+        }]
+      },
+      {
+        "name": "tree",
+        "process": "xiang.helper.ArrayTree",
+        "args": ["{{$res.array}}", { "parent": "parent_id"}]
+      }
+    ],
+    "output": {
+        "data": "{{$res.tree}}"
+    }
+}
+  

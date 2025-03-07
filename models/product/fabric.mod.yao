@@ -1,0 +1,99 @@
+{
+    "name": "::Fabric Management",
+    "table": {
+        "name": "fabric",
+        "comment": "::Fabric Management"
+    },
+    "columns": [
+        { "label": "ID", "name": "id", "type": "ID" },
+        {
+            "label": "::Category Id",
+            "name": "category_id",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "label": "::Name",
+            "name": "name",
+            "type": "string",
+            "description": "::Name Description",
+            "length": 64,
+            "comment": "::Name",
+            "index": true
+        },
+        {
+            "label": "::Width",
+            "name": "width",
+            "type": "decimal",
+            "comment": "::Width"
+        },
+        {
+            "label": "门幅单位",
+            "name": "width_unit",
+            "type": "string",
+            "comment": "门幅单位",
+            "default": "厘米"
+        },
+        {
+            "label": "::Weight",
+            "name": "weight",
+            "type": "decimal",
+            "precision": 4,
+            "scale": 1,
+            "comment": "::Weight"
+        },
+        {
+            "label": "克重单位",
+            "name": "weight_unit",
+            "type": "string",
+            "comment": "克重单位",
+            "default": "g/m2"
+        },
+        {
+            "label": "面料标签",
+            "name": "tags",
+            "type": "json",
+            "comment": "面料标签"
+        },
+        {
+            "label": "图集",
+            "comment": "图集",
+            "name": "images",
+            "type": "json",
+            "nullable": true
+        }
+    ],
+    "relations": {
+        "category": {
+            "type": "hasOne",
+            "model": "product.category",
+            "key": "id",
+            "foreign": "category_id",
+            "query": {}
+        }
+    },
+    "option": { "timestamps": true, "soft_deletes": true },
+    "values": [
+        { 
+            "id": 2,
+            "name": "针织罗马布",
+            "category_id": 3,
+            "width": 156,
+            "weight": 350
+        },
+        { 
+            "id": 3,
+            "name": "针织雪纺",
+            "category_id": 2,
+            "width": 150,
+            "weight": 80
+        },
+        { 
+            "id": 4,
+            "name": "麂皮绒",
+            "category_id": 5,
+            "width": 150,
+            "weight": 180
+        }
+    ]
+}

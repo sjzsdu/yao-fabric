@@ -1,0 +1,140 @@
+{
+    "name": "面料分类",
+    "action": {
+        "bind": {
+            "model": "product.category",
+            "option": {
+                "withs": { 
+                    "parent": { "query": { "select": ["id", "name"] }}
+                }
+            }
+        }
+    },
+    "layout": {
+        "form": {
+            "sections": [
+                {
+                    "columns": [
+                        {
+                            "width": 12,
+                            "name": "分类名称"
+                        },
+                        {
+                            "width": 12,
+                            "name": "排序"
+                        },
+                        {
+                            "name": "上级分类",
+                            "width": 24
+                        },
+                        {
+                            "name": "描述",
+                            "width": 24
+                        }
+                    ]
+                }
+            ],
+            "props": {}
+        },
+        "primary": "id",
+        "actions": [
+            {
+                "title": "保存",
+                "icon": "icon-check",
+                "showWhenAdd": true,
+                "style": "primary",
+                "props": {
+                    "rule_id": ["pro_cat_add", "pro_cat_edit"]
+                },
+                "action": [
+                    {
+                        "name": "Submit",
+                        "type": "Form.submit",
+                        "payload": {}
+                    },
+                    {
+                        "name": "Back",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            },
+            {
+                "title": "返回",
+                "divideLine": true,
+                "showWhenAdd": true,
+                "showWhenView": true,
+                "icon": "icon-arrow-left",
+                "action": [
+                    {
+                        "name": "closeModal",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            }
+        ]
+    },
+    "fields": {
+        "form": {
+            "分类名称": {
+                "view": {
+                    "props": {},
+                    "type": "Text"
+                },
+                "edit": {
+                    "type": "Input",
+                    "bind": "name",
+                    "props": {}
+                },
+                "bind": "name"
+            },
+            "排序": {
+                "bind": "order",
+                "view": {
+                    "type": "Text",
+                    "props": {}
+                },
+                "edit": {
+                    "props": {
+                        "type": "number"
+                    },
+                    "type": "Input",
+                    "bind": "order"
+                }
+            },
+            "上级分类": {
+                "edit": {
+                    "props": {
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.product.category.TreeSelect",
+                                "query": {
+                                    "excludes": "{{id}}"
+                                }
+                            }
+                        }
+                    },
+                    "type": "TreeSelect"
+                },
+                "bind": "parent_id",
+                "view": {
+                    "props": {},
+                    "type": "Text"
+                }
+            },
+            "描述": {
+                "view": {
+                    "props": {},
+                    "type": "Text"
+                },
+                "edit": {
+                    "type": "TextArea",
+                    "bind": "description",
+                    "props": {}
+                },
+                "bind": "description"
+            }
+        }
+    }
+}

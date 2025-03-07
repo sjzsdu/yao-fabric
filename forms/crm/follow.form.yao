@@ -1,0 +1,181 @@
+{
+    "name": "跟进",
+    "action": {
+        "bind": {
+          "model": "crm.follow",
+          "option": {}
+        },
+        "before:save": "scripts.form.BeforeSave"
+    },
+    "layout": {
+        "primary": "id",
+        "form": {
+            "sections": [
+                {
+                    "columns": [
+                        { "name": "标题", "width": 24 },
+                        { "name": "公司", "width": 12 },
+                        { "name": "联系人", "width": 12 },
+                        { "name": "备注", "width": 24 },
+                        { "name": "快照", "width": 24 }
+                    ]
+                }
+            ]
+        },
+        "actions": [
+            {
+              "title": "保存",
+              "icon": "icon-check",
+              "showWhenAdd": true,
+              "style": "primary",
+              "props": {
+                "rule_id": ["crm_follow_add", "crm_follow_edit"]
+              },
+              "action": [
+                {
+                  "name": "Submit",
+                  "type": "Form.submit",
+                  "payload": {}
+                },
+                {
+                  "name": "Back",
+                  "type": "Common.closeModal",
+                  "payload": {}
+                }
+              ]
+            },
+            {
+              "title": "删除",
+              "icon": "icon-trash-2",
+              "showWhenAdd": false,
+              "showWhenView": true,
+              "style": "danger",
+              "props": {
+                  "rule_id": "crm_follow_del"
+              },
+              "action": [
+                  {
+                      "name": "Del",
+                      "type": "Form.delete",
+                      "payload": {}
+                  },
+                  {
+                      "name": "Back",
+                      "type": "Common.closeModal",
+                      "payload": {}
+                  }
+              ],
+              "confirm": { "title": ""}
+            },
+            {
+              "title": "返回",
+              "divideLine": true,
+              "showWhenAdd": true,
+              "showWhenView": true,
+              "icon": "icon-arrow-left",
+              "action": [
+                {
+                  "name": "closeModal",
+                  "type": "Common.closeModal",
+                  "payload": {}
+                }
+              ]
+            }
+        ]
+    },
+    "fields": {
+        "form": {
+            "标题": {
+                "bind": "name",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "itemProps": {
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ]
+                    },
+                    "placeholder": "联系人"
+                  }
+                }
+            },
+            "公司": {
+                "bind": "company_id",
+                "edit": {
+                  "type": "Relation",
+                    "props": {
+                        "placeholder": "请选择公司",
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.crm.company.Select",
+                                "query": {}
+                            }
+                        },
+                        "model": "crm.company",
+                        "selectMode": "single",
+                        "accessSelect": {
+                          "rule_id": "crm_company"
+                        },
+                        "accessAdd": {
+                          "rule_id": "crm_company_add"
+                        }
+                    }
+                }
+            },
+            "联系人": {
+              "bind": "person_id",
+              "edit": {
+                "type": "Relation",
+                  "props": {
+                      "placeholder": "请选择联系人",
+                      "xProps": {
+                          "$remote": {
+                              "process": "scripts.crm.person.Select",
+                              "query": {}
+                          }
+                      },
+                      "model": "crm.person",
+                      "selectMode": "single",
+                      "accessSelect": {
+                        "rule_id": "crm_person"
+                      },
+                      "accessAdd": {
+                        "rule_id": "crm_person_add"
+                      }
+                  }
+              }
+            },
+            "快照": {
+              "bind": "images",
+              "view": { "type": "Image", "compute": "Download", "bind": "images" }, // 使用 Image 组件显示已上传图片
+              "edit": {
+                "type": "Upload",
+                "compute": "Upload",
+                "props": {
+                  "filetype": "image", // 上传文件类型设定为 image
+                  "maxCount": 6,
+                  "desc": "快照",
+                  "cos": {
+                      "tokenUrl": "/api/common/cosToken",
+                      "uploadUrl": "https://yao-fabric-1252427671.cos.ap-shanghai.myqcloud.com",
+                      "bucket": "yao-fabric-1252427671",
+                      "region": "ap-shanghai",
+                      "keyFormat": "/follow/{date}/{hash}.{ext}"
+                  }
+                }
+              }
+            },
+            "备注": {
+                "bind": "remark",
+                "edit": {
+                  "type": "TextArea",
+                  "props": {
+                    "placeholder": "备注"
+                  }
+                }
+            }
+        }
+    }
+}

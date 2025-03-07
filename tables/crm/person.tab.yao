@@ -1,0 +1,289 @@
+{
+    "name": "联系人",
+    "action": {
+        "bind": {
+            "model": "crm.person",
+            "option": { 
+                "withs": {
+                    "company": { "query": { "select": ["id", "name", "area", "address"] }},
+                    "user": { "query": { "select": ["id", "name"] }},
+                    "department": { "query": { "select": ["id", "name"] }}
+                },
+                "form": "crm.person"
+            }
+        },
+        "search": {
+            "default": [{ "orders": [{ "column": "id", "option": "desc" }]}, 1, 10]
+        }
+    },
+
+    "layout": {
+        "primary": "id",
+        "header": {
+            "preset": {
+                "column": {
+                    "musts": ["name", "mobile"]
+                },
+                "filter": {
+                    "musts": ["name", "mobile"]
+                }
+            }
+        },
+        "filter": {
+            "columns": [
+                {
+                    "name": "姓名",
+                    "width": 4
+                },
+                {
+                    "name": "手机号",
+                    "width": 4
+                },
+                {
+                    "name": "标签",
+                    "width": 4
+                },
+                {
+                    "name": "邮箱",
+                    "width": 4
+                }
+            ],
+            "actions": [
+                {
+                    "title": "添加联系人",
+                    "icon": "icon-plus",
+                    "width": 3,
+                    "props": {
+                        "rule_id": "crm_person_add"
+                    },
+                    "action": [
+                        {
+                            "name": "add",
+                            "type": "Common.openModal",
+                            "payload": {
+                                "Form": { "type": "edit", "model": "crm.person" }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "table": {
+            "columns": [
+                { "name": "ID", "width": 80 },
+                { "name": "姓名", "width": 100 },
+                { "name": "公司", "width": 160 },
+                { "name": "手机号", "width": 160 },
+                { "name": "标签", "width": 250 },
+                { "name": "负责人", "width": 100 },
+                { "name": "部门", "width": 100 },
+                { "name": "邮箱", "width": 160 },
+                { "name": "微信号", "width": 160 },
+                { "name": "地区", "width": 180 },
+                { "name": "地址", "width": 250 },
+            ],
+            "operation": {
+                "fold": false,
+                "width": 100,
+                "actions": [
+                    {
+                        "title": "查看",
+                        "icon": "icon-eye",
+                        "props": {
+                            "rule_id": "crm_person_view"
+                        },
+                        "action": [
+                            {
+                                "name": "view",
+                                "type": "Common.openModal",
+                                "payload": {
+                                  "Form": { "type": "view", "model": "crm.person" }
+                                }
+                            }
+                        ]
+                      },
+                      {
+                        "title": "编辑",
+                        "icon": "icon-edit-2",
+                        "props": {
+                            "rule_id":  "crm_person_edit"
+                        },
+                        "action": [
+                            {
+                                "name": "edit",
+                                "type": "Common.openModal",
+                                "payload": {
+                                  "Form": { "type": "edit", "model": "crm.person" }
+                                }
+                            }
+                        ]
+                      },
+                      {
+                        "icon": "icon-trash-2",
+                        "props": {
+                            "rule_id":  "crm_person_del"
+                        },
+                        "action": [
+                            {
+                                "name": "del",
+                                "type": "Table.delete",
+                                "payload": {}
+                            }
+                        ],
+                        "style": "danger",
+                        "confirm": {
+                          "title": "提示",
+                          "desc": "确认删除，删除后数据无法恢复？"
+                        },
+                        "title": "删除"
+                      }
+                ]
+            }
+        }
+    },
+
+    "fields": {
+        "filter": {
+            "姓名": {
+                "bind": "where.name.match",
+                "edit": {
+                  "type": "Input",
+                  "compute": "Trim",
+                  "props": {
+                    "placeholder": "请输入姓名搜索"
+                  }
+                }
+            },
+            "手机号": {
+                "bind": "where.mobile.match",
+                "edit": {
+                  "type": "Input",
+                  "compute": "Trim",
+                  "props": {
+                    "placeholder": "请输入手机号搜索"
+                  }
+                }
+            },
+            "邮箱": {
+                "bind": "where.email.match",
+                "edit": {
+                  "type": "Input",
+                  "compute": "Trim",
+                  "props": {
+                    "placeholder": "请输入邮箱搜索"
+                  }
+                }
+            },
+            "标签": {
+                "bind": "where.tags.jsoncontains",
+                "edit": {
+                    "type": "Select",
+                    "props": {
+                        "placeholder": "请选择标签",
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.admin.dict.Select",
+                                "query": { "name": "联系人标签" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "table": {
+            "ID": {
+                "bind": "id",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "姓名": {
+                "bind": "name",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "手机号": {
+                "bind": "mobile",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "邮箱": {
+                "bind": "email",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "公司": {
+                "bind": "company_id",
+                "view": {
+                    "bind": "company.name",
+                    "type": "Text"
+                },
+                // "edit": {
+                //     "type": "Select",
+                //     "props": {
+                //         "placeholder": "请选择公司",
+                //         "xProps": {
+                //             "$remote": {
+                //                 "process": "scripts.crm.person.Select",
+                //                 "query": {}
+                //             }
+                //         }
+                //     }
+                // }
+            },
+            "标签": {
+                "bind": "tags",
+                "view": {
+                    "type": "Tag",
+                    "props": {
+                        "placeholder": "请选择标签",
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.admin.dict.Select",
+                                "query": { "name": "联系人标签" }
+                            }
+                        }
+                    }
+                }
+            },
+            "负责人": {
+                "bind": "user_id",
+                "view": {
+                    "bind": "user.name",
+                    "type": "Text"
+                },
+            },
+            "部门": {
+                "bind": "department_id",
+                "view": {
+                    "bind": "department.name",
+                    "type": "Text"
+                },
+            },
+            "地区": {
+                "bind": "area",
+                "view": {
+                    "type": "Text",
+                    "compute": {
+                        "process": "ValueOr",
+                        "args": ["$C(row.area)", "$C(row.company.area)"]
+                    }
+                }
+            },
+            "地址": {
+                "bind": "address",
+                "view": {
+                    "type": "Text",
+                    "compute": {
+                        "process": "ValueOr",
+                        "args": ["$C(row.address)", "$C(row.company.address)"]
+                    }
+                    
+                }
+            },
+        }
+    }
+}

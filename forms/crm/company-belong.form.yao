@@ -1,0 +1,105 @@
+{
+  "name": "修改归属",
+  "action": {
+    "bind": {
+      "model": "crm.company",
+      "option": {}
+    }
+  },
+  "layout": {
+    "primary": "id",
+    "form": {
+      "sections": [
+        {
+          "title": "归属信息",
+          "desc": "修改归属负责人和部门",
+          "columns": [
+            { "name": "负责人", "width": 24 },
+            { "name": "部门", "width": 24 }
+          ]
+        }
+      ]
+    },
+    "actions": [
+      {
+        "title": "保存",
+        "icon": "icon-check",
+        "showWhenAdd": true,
+        "style": "primary",
+        "props": {
+          "rule_id": ["crm_company_belong"]
+        },
+        "action": [
+          {
+            "name": "Submit",
+            "type": "Form.submit",
+            "payload": {}
+          },
+          {
+            "name": "Back",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      },
+      {
+        "title": "返回",
+        "divideLine": true,
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "icon": "icon-arrow-left",
+        "action": [
+          {
+            "name": "closeModal",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      }
+    ]
+  },
+  "fields": {
+    "form": {
+      "负责人": {
+        "bind": "user_id",
+        "edit": {
+          "type": "Relation",
+          "props": {
+            "placeholder": "请选择负责人",
+            "xProps": {
+                "$remote": {
+                    "process": "scripts.admin.user.Select",
+                    "query": {}
+                }
+            },
+            "model": "admin.user",
+            "selectMode": "single",
+            "accessSelect": {
+              "rule_id": "sym_user"
+            },
+            "accessAdd": {
+              "rule_id": "sym_user_add"
+            }
+          }
+        }
+      },
+      "部门": {
+        "bind": "department_id",
+        "edit": {
+          "type": "TreeSelect",
+          "bind": "department_id",
+          "props": {
+            "props": {
+            },
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.department.TreeSelect",
+                "query": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

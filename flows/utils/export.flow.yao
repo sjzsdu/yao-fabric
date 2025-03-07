@@ -1,0 +1,32 @@
+// 主要是第2步和第4步
+// 第2步将数组导出生成为一个excel文件
+// 第4步读取文件的内容发给后端api
+{
+    "label": "下载",
+    "version": "1.0.0",
+    "description": "下载",
+    "nodes": [
+      {
+        "name": "打印",
+        "process": "xiang.helper.Print",
+        "args": ["{{$in}}"]
+      },
+      {
+        "name": "文件",
+        "process": "yao.table.export",
+        "args": ["{{$in.0}}", "{{$in.1}}", "{{$in.2}}", "{{$in.3}}"]
+      },
+      {
+        "name": "打印",
+        "process": "xiang.helper.Print",
+        "args": ["{{$res.文件}}"]
+      },
+      {
+        "name": "数据",
+        "process": "fs.system.readfile",
+        "args": ["{{$res.文件}}", false]
+      }
+    ],
+    "output": "{{$res.数据}}"
+  }
+  

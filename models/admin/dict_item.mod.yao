@@ -1,0 +1,71 @@
+{
+    "name": "字典项",
+    "table": {
+        "name": "dict_item",
+        "comment": "字典项"
+    },
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "ID",
+            "comment": "ID",
+            "primary": true
+        },
+        {
+            "label": "字典项名称",
+            "name": "label",
+            "type": "string",
+            "length": 50,
+            "comment": "字典项名称"
+        },
+        {
+            "label": "颜色",
+            "name": "color",
+            "type": "string",
+            "length": 50,
+            "comment": "颜色"
+        },
+        {
+            "label": "权重",
+            "name": "color",
+            "type": "integer",
+            "comment": "权重"
+        },
+        {
+            "label": "默认选中",
+            "name": "status",
+            "type": "boolean",
+            "default": true,
+            "comment": "默认选中 true 是 false 否"
+        },
+        {
+            "label": "字典项",
+            "name": "dict_id",
+            "type": "integer",
+            "comment": "字典项id"
+        },
+        {
+            "label": "排序",
+            "name": "order",
+            "type": "integer",
+            "comment": "排序越大越靠前",
+            "default": 1
+        }
+    ],
+    "relations": {
+        "dict": {
+          "type": "hasOne",
+          "model": "admin.dict",
+          "key": "id",
+          "foreign": "dict_id",
+          "query": {}
+        }
+    },
+    "option": {
+        "timestamps": false,
+        "soft_deletes": false
+    },
+    "values": [
+    ]
+}

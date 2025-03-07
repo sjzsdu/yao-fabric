@@ -1,0 +1,97 @@
+{
+    "name": "系统管理",
+    "path": "/setting",
+    "icon": "icon-settings",
+    "children": [
+        {
+            "id": "set",
+            "name": "系统设置",
+            "path": "/setting",
+            "icon": "icon-settings"
+        },
+        {
+            "id": "user",
+            "name": "员工管理",
+            "path": "/x/Table/admin.user",
+            "icon": "icon-user",
+            "children": [
+                {
+                    "id": "add",
+                    "name": "添加"
+                },
+                {
+                    "id": "edit",
+                    "name": "编辑"
+                },
+                {
+                    "id": "reset",
+                    "name": "重置密码"
+                },
+                {
+                    "id": "del",
+                    "name": "删除"
+                }          
+            ]
+        },
+        {
+            "id": "dep",
+            "name": "部门管理",
+            "path": "/x/Table/admin.department",
+            "icon": "icon-archive",
+            "children": [
+                {
+                    "id": "add",
+                    "name": "添加"
+                },
+                {
+                    "id": "edit",
+                    "name": "编辑"
+                },
+                {
+                    "id": "del",
+                    "name": "删除"
+                }          
+            ]
+        },
+        {
+            "id": "role",
+            "name": "角色管理",
+            "path": "/x/Table/admin.role",
+            "icon": "icon-archive",
+            "children": [
+                {
+                    "id": "add",
+                    "name": "添加"
+                },
+                {
+                    "id": "edit",
+                    "name": "编辑"
+                },
+                {
+                    "id": "del",
+                    "name": "删除"
+                }          
+            ]
+        },
+        {
+            "id": "dict",
+            "name": "字典管理",
+            "path": "/x/Table/admin.dict",
+            "icon": "icon-archive",
+            "children": [
+                {
+                    "id": "add",
+                    "name": "添加"
+                },
+                {
+                    "id": "edit",
+                    "name": "编辑"
+                },
+                {
+                    "id": "del",
+                    "name": "删除"
+                }          
+            ]
+        }
+    ]
+}

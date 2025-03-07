@@ -1,0 +1,49 @@
+{
+    "name": "产品管理",
+    "path": "/x/Table/product.fabric",
+    "icon": "icon-coffee",
+    "children": [
+        {
+            "id": "fab",
+            "name": "面料管理",
+            "path": "/x/Table/product.fabric",
+            "children": [
+                {
+                    "id": "view",
+                    "name": "查看"
+                },
+                {
+                    "id": "add",
+                    "name": "添加"
+                },
+                {
+                    "id": "edit",
+                    "name": "编辑"
+                },
+                {
+                    "id": "del",
+                    "name": "删除"
+                }            
+            ]
+        },
+        {
+            "id": "cat",
+            "name": "面料分类",
+            "path": "/x/Table/product.category",
+            "children": [
+                {
+                    "id": "add",
+                    "name": "添加"
+                },
+                {
+                    "id": "edit",
+                    "name": "编辑"
+                },
+                {
+                    "id": "del",
+                    "name": "删除"
+                }        
+            ]
+        }
+    ]
+}

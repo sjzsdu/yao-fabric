@@ -1,0 +1,216 @@
+{
+    "name": "部门列表",
+    "rule": "sys_dep",
+    "action": {
+      "bind": {
+        "model": "admin.department",
+        "option": {
+          "withs": { 
+            "parent": { "query": { "select": ["id", "name"] }}, 
+            "leader": { "query": { "select": ["id", "name"] }}
+          }
+        }
+      },
+      "search": {
+        "guard": "bearer-jwt",
+        "process": "flows.admin.department",
+        "default": []
+      }
+    },
+    "layout": {
+      "primary": "id",
+      "header": {
+        "preset": {},
+        "actions": []
+      },
+      "filter": {
+        "actions": [
+          {
+            "title": "添加",
+            "icon": "icon-plus",
+            "width": 3,
+            "props": {
+              "rule_id": "sys_dep_add"
+            },
+            "action": [
+              {
+                "name": "add",
+                "type": "Common.openModal",
+                "payload": {
+                  "width": 1000,
+                  "Form": {
+                    "type": "edit",
+                    "model": "admin.department"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "table": {
+        "columns": [
+          {
+            "width": 120,
+            "name": "ID"
+          },
+          {
+            "width": 200,
+            "name": "部门名称"
+          },
+          {
+            "name": "描述",
+            "width": 250
+          },
+          {
+            "name": "排序",
+            "width": 100
+          },
+          {
+            "name": "上级部门",
+            "width": 100 
+          },
+          {
+            "name": "部门领导",
+            "width": 100
+          }
+        ],
+        "props": {
+          "pagination": false
+        },
+        "operation": {
+          "fold": false,
+          "actions": [
+            {
+              "title": "查看",
+              "icon": "icon-eye",
+              "action": [
+                {
+                  "name": "view",
+                  "type": "Common.openModal",
+                  "payload": {
+                    "width": 1000,
+                    "Form": {
+                      "type": "view",
+                      "model": "admin.department"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "title": "编辑",
+              "icon": "icon-edit-2",
+              "props": {
+                "rule_id": "sys_dep_edit"
+              },
+              "action": [
+                {
+                  "name": "edit",
+                  "type": "Common.openModal",
+                  "payload": {
+                    "Form": {
+                      "type": "edit",
+                      "model": "admin.department"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "icon": "icon-trash-2",
+              "action": [
+                {
+                  "name": "del",
+                  "type": "Table.delete",
+                  "payload": {}
+                }
+              ],
+              "props": {
+                "rule_id": "sys_dep_del"
+              },
+              "style": "danger",
+              "confirm": {
+                "title": "提示",
+                "desc": "确认删除，删除后数据无法恢复？"
+              },
+              "title": "删除"
+            }
+          ]
+        }
+      }
+    },
+    "fields": {
+      "table": {
+        "ID": {
+          "view": {
+            "type": "Text"
+          },
+          "bind": "id"
+        },
+        "部门名称": {
+          "view": {
+            "type": "Text"
+          },
+          "edit": {
+            "type": "Input"
+          },
+          "bind": "name"
+        },
+        "排序": {
+            "bind": "order",
+            "view": {
+              "type": "Text"
+            },
+            "edit": {
+              "props": {
+                "type": "number"
+              },
+              "type": "Input"
+            }
+        },
+        "描述": {
+          "bind": "description",
+          "view": {
+            "type": "Text"
+          },
+          "edit": {
+            "type": "TextArea",
+            "bind": "description",
+            "props": {}
+          }
+        },
+        "上级部门": {
+          "bind": "parent.name",
+          "view": {
+            "props": {},
+            "type": "Text"
+          }
+        },
+        "部门领导": {
+            "edit": {
+                "bind": "user_id",
+                "props": {
+                    "showSearch": true,
+                    "xProps": {
+                      "$remote": {
+                        "process": "scripts.admin.user.Select",
+                        "query": {}
+                      }
+                    }
+                },
+                "type": "Select"
+            },
+            "bind": "leader.name",
+            "view": {
+                "props": {},
+                "type": "Text"
+            }
+        }
+      }
+    },
+    "config": {
+      "full": false
+    }
+  }
+  

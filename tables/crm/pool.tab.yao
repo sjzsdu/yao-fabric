@@ -1,0 +1,335 @@
+{
+    "name": "公海",
+    "action": {
+        "bind": {
+            "model": "crm.company",
+            "option": { 
+                "wheres": [
+                    {
+                        "wheres": [
+                            {"column": "user_id", "op": "null", "method": "orwhere"},
+                            {"column": "user_id", "op": "eq", "value": 0, "method": "orwhere"}
+                        ]
+                    }        
+                ],
+                "form": "crm.company"
+            }
+        },
+        "search": {
+            "default": [{ 
+                "orders": [{ "column": "id", "option": "desc" }]
+            }, 1, 10]
+        }
+    },
+    "layout": {
+        "primary": "id",
+        "header": {
+            "preset": {
+                "column": {
+                    "musts": ["short_name"]
+                },
+                "filter": {
+                    "musts": ["full_name"]
+                }
+            }
+        },
+        "filter": {
+            "columns": [
+                {
+                    "name": "公司全称",
+                    "width": 4
+                },
+                {
+                    "name": "公司类型",
+                    "width": 4
+                },
+                {
+                    "name": "公司标签",
+                    "width": 4
+                }
+            ],
+            "actions": []
+        },
+        "table": {
+            "columns": [
+                {
+                    "name": "ID",
+                    "width": 80
+                },
+                {
+                    "name": "公司简称",
+                    "width": 100
+                },
+                {
+                    "name": "公司全称",
+                    "width": 200
+                },
+                {
+                    "name": "公司类型",
+                    "width": 100
+                },
+                {
+                    "name": "标签",
+                    "width": 100
+                },
+                {
+                    "name": "传真",
+                    "width": 130
+                },
+                {
+                    "name": "公司标签",
+                    "width": 100
+                },
+                {
+                    "name": "地区",
+                    "width": 180
+                },
+                {
+                    "name": "地址",
+                    "width": 250
+                },
+                {
+                    "name": "营业执照",
+                    "width": 100
+                },
+                {
+                    "name": "税务登记号",
+                    "width": 100
+                },
+                {
+                    "name": "银行账户",
+                    "width": 100
+                },
+                {
+                    "name": "开户行",
+                    "width": 100
+                },
+                {
+                    "name": "网址",
+                    "width": 100
+                }
+            ],
+            "operation": {
+                "fold": false,
+                "width": 100,
+                "actions": [
+                    {
+                        "title": "查看",
+                        "icon": "icon-eye",
+                        "props": {
+                            "rule_id": "crm_pool_view"
+                        },
+                        "action": [
+                            {
+                                "name": "view",
+                                "type": "Common.openModal",
+                                "payload": {
+                                  "Form": { "type": "view", "model": "crm.company" }
+                                }
+                            }
+                        ]
+                      },
+                      {
+                        "title": "归属",
+                        "icon": "icon-paperclip",
+                        "props": {
+                            "rule_id": "crm_pool_belong"
+                        },
+                        "action": [
+                            {
+                                "name": "edit",
+                                "type": "Common.openModal",
+                                "payload": {
+                                  "Form": { "type": "edit", "model": "crm.company-belong" },
+                                  "width": 600
+                                }
+                            }
+                        ]
+                      },
+                      {
+                        "icon": "icon-trash-2",
+                        "props": {
+                            "rule_id": "crm_pool_del"
+                        },
+                        "action": [
+                            {
+                                "name": "del",
+                                "type": "Table.delete",
+                                "payload": {}
+                            }
+                        ],
+                        "style": "danger",
+                        "confirm": {
+                          "title": "提示",
+                          "desc": "确认删除，删除后数据无法恢复？"
+                        },
+                        "title": "删除"
+                      }
+                ]
+            }
+        }
+    },
+    "fields": {
+        "filter": {
+            "公司全称": {
+                "bind": "where.name.match",
+                "edit": {
+                  "type": "Input",
+                  "compute": "Trim",
+                  "props": {
+                    "placeholder": "请输入公司全称搜索"
+                  }
+                }
+            },
+            "公司类型": {
+                "bind": "where.type.eq",
+                "edit": {
+                    "type": "Select",
+                    "props": {
+                        "placeholder": "请选择类型",
+                        "options": [
+                            { "label": "客户", "value": "customer" },
+                            { "label": "供应商", "value": "supplier" }
+                        ]
+                    }
+                }
+            },
+            "公司标签": {
+                "bind": "where.tags.jsoncontains",
+                "edit": {
+                    "type": "Select",
+                    "props": {
+                        "placeholder": "请选择标签",
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.admin.dict.Select",
+                                "query": { "name": "公司标签" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "table": {
+            "ID": {
+                "bind": "id",
+                "view": {
+                    "type": "Text",
+                    "props": {
+                        "value": ":id"
+                    }
+                }
+            },
+            "负责人": {
+                "bind": "user_id",
+                "view": {
+                    "bind": "user.name",
+                    "type": "Text"
+                },
+            },
+            "部门": {
+                "bind": "department_id",
+                "view": {
+                    "bind": "department.name",
+                    "type": "Text"
+                },
+            },
+            "公司简称": {
+                "bind": "short_name",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "公司全称": {
+                "bind": "name",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "电话": {
+                "bind": "tel",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "传真": {
+                "bind": "fax",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "营业执照": {
+                "bind": "credit_code",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "税务登记号": {
+                "bind": "tax_code",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "银行账户": {
+                "bind": "bank_code",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "开户行": {
+                "bind": "bank_name",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "网址": {
+                "bind": "link",
+                "view": {
+                    "type": "A",
+                    "props": {
+                        "href": "http"
+                    }
+                }
+            },
+            "公司类型": {
+                "bind": "type",
+                "view": {
+                    "type": "Tag",
+                    "props": {
+                        "options": [
+                            { "label": "客户", "value": "customer", "color": "#00AAAA"},
+                            { "label": "供应商", "value": "supplier", "color": "#AA0000"}
+                        ]
+                    }
+                }
+            },
+            "地区": {
+                "bind": "area",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "地址": {
+                "bind": "address",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "标签": {
+                "bind": "tags",
+                "view": {
+                    "type": "Tag",
+                    "props": {
+                        "placeholder": "请选择标签",
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.admin.dict.Select",
+                                "query": { "name": "公司标签" }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+data
+logs
+./logs/application.log
+./logs/*
+*.log
+logs/
+db/.session
+.vscode/*
+.DS_Store
+.env
+db/

@@ -1,0 +1,228 @@
+{
+  "name": "角色",
+  "rule": "sys_role",
+  "action": {
+    "bind": {
+      "model": "admin.role",
+      "option": {
+        "form": "admin.role"
+      }
+    },
+    "search": {
+      "default": [
+        {
+          "orders": [
+            {
+              "column": "order",
+              "option": "desc"
+            }
+          ]
+        },
+        1,
+        10
+      ]
+    },
+    "after:search": "scripts.admin.role.AfterSearch"
+  },
+  "layout": {
+    "primary": "id",
+    "header": {
+      "preset": {}
+    },
+    "filter": {
+      "columns": [
+        {
+          "name": "角色名称",
+          "width": 4
+        }
+      ],
+      "actions": [
+        {
+          "title": "添加角色",
+          "icon": "icon-plus",
+          "width": 3,
+          "props": {
+            "rule_id": "sys_role_add"
+          },
+          "action": [
+            {
+              "name": "add",
+              "type": "Common.openModal",
+              "payload": {
+                "width": 1000,
+                "Form": {
+                  "type": "edit",
+                  "model": "admin.role"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "table": {
+      "columns": [
+        {
+          "name": "ID",
+          "width": 100
+        },
+        {
+          "name": "角色名称",
+          "width": 200
+        },
+        {
+          "name": "备注",
+          "width": 200
+        },
+        {
+          "name": "状态",
+          "width": 100
+        },
+        {
+          "name": "数据权限",
+          "width": 100
+        },
+        {
+          "name": "排序",
+          "width": 100
+        }
+      ],
+      "operation": {
+        "fold": false,
+        "width": 100,
+        "actions": [
+          {
+            "title": "查看",
+            "icon": "icon-eye",
+            "action": [
+              {
+                "name": "view",
+                "type": "Common.openModal",
+                "payload": {
+                  "Form": { "type": "view", "model": "admin.role" }
+                }
+              }
+            ]
+          },
+          {
+            "title": "编辑",
+            "icon": "icon-edit-2",
+            "props": {
+              "rule_id": "sys_role_edit"
+            },
+            "action": [
+              {
+                "name": "edit",
+                "type": "Common.openModal",
+                "payload": {
+                  "Form": { "type": "edit", "model": "admin.role" }
+                }
+              }
+            ],
+            "disabled": {
+              "value": "*",
+              "field": "rule_ids"
+            }
+          },
+          {
+            "icon": "icon-trash-2",
+            "action": [
+              {
+                "name": "add",
+                "type": "Table.delete",
+                "payload": {}
+              }
+            ],
+            "props": {
+              "rule_id": "sys_role_del"
+            },
+            "style": "danger",
+            "confirm": {
+              "title": "提示",
+              "desc": "确认删除，删除后数据无法恢复？"
+            },
+            "title": "删除",
+            "disabled": {
+              "value": "*",
+              "field": "rule_ids"
+            }
+          }
+        ]
+      } 
+    }
+  },
+  "fields": {
+    "filter": {
+      "角色名称": {
+        "bind": "where.name.match",
+        "edit": {
+          "type": "Input",
+          "compute": "Trim",
+          "props": {
+            "placeholder": "请输入角色名称搜索"
+          }
+        }
+      }
+    },
+    "table": {
+      "ID": {
+        "bind": "id",
+        "view": {
+          "type": "Text"
+        }
+      },
+      "角色名称": {
+        "bind": "name",
+        "view": {
+          "type": "Text"
+        },
+        "edit": {
+          "type": "Input",
+          "bind": "name"
+        }
+      },
+      "状态": {
+        "bind": "status",
+        "view": {
+          "type": "Switch",
+          "props": {
+            "checkedValue": 1,
+            "unCheckedValue": 0,
+            "checkedChildren": "启用",
+            "unCheckedChildren": "停用"
+          }
+        }
+      },
+      "排序": {
+        "bind": "order",
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "order"
+        }
+      },
+      "数据权限": {
+        "bind": "data",
+        "view": {
+          "type": "Tag",
+          "props": {
+            "options": [
+              { "value": "all", "label": "所有数据" },
+              { "value": "self", "label": "个人数据" },
+              { "value": "department", "label": "部门数据" }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "config": {
+    "full": false
+  }
+}

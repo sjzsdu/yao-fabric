@@ -1,0 +1,21 @@
+{
+    "name": "权限树",
+    "nodes": [
+      {
+        "name": "array",
+        "process": "models.admin.menu.Get",
+        "args": [{
+            "wheres": [],
+            "withs": { "parent": {} },
+            "orders": [{"column": "order", "option": "desc"}]
+        }]
+      },
+      {
+        "name": "tree",
+        "process": "xiang.helper.ArrayTree",
+        "args": ["{{$res.array}}", { "parent": "parent_id"}]
+      }
+    ],
+    "output": { "data": "{{$res.tree}}" }
+  }
+  

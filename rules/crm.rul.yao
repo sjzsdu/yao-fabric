@@ -1,0 +1,100 @@
+{
+    "name": "CRM系统",
+    "path": "/x/Table/crm.company",
+    "icon": "icon-users",
+    "children": [
+        {
+            "id": "dash",
+            "name": "总览",
+            "path": "/x/chart/crm.company"
+        },
+        {
+            "id": "comp",
+            "name": "往来单位",
+            "path": "/x/Table/crm.company",
+            "children": [
+                {
+                    "id": "view",
+                    "name": "查看"
+                },
+                {
+                    "id": "add",
+                    "name": "添加"
+                },
+                {
+                    "id": "edit",
+                    "name": "编辑"
+                },
+                {
+                    "id": "belong",
+                    "name": "归属"
+                },
+                {
+                    "id": "del",
+                    "name": "删除"
+                },
+                {
+                    "id": "abandon",
+                    "name": "加入公海"
+                }              
+            ]
+        },
+        {
+            "id": "person",
+            "name": "联系人管理",
+            "path": "/x/Table/crm.person",
+            "children": [
+                {
+                    "id": "add",
+                    "name": "添加"
+                },
+                {
+                    "id": "edit",
+                    "name": "编辑"
+                },
+                {
+                    "id": "del",
+                    "name": "删除"
+                },
+                {
+                    "id": "belong",
+                    "name": "归属"
+                }          
+            ]
+        },
+        {
+            "id": "follow",
+            "name": "跟进管理",
+            "path": "/x/Table/crm.follow",
+            "children": [
+                {
+                    "id": "view",
+                    "name": "查看"
+                },
+                {
+                    "id": "add",
+                    "name": "添加"
+                },
+                {
+                    "id": "edit",
+                    "name": "编辑"
+                },
+                {
+                    "id": "del",
+                    "name": "删除"
+                }          
+            ]
+        },
+        {
+            "id": "pool",
+            "name": "公海管理",
+            "path": "/x/Table/crm.pool",
+            "children": [
+                {
+                    "id": "grab",
+                    "name": "抢占"
+                }       
+            ]
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "name": "员工列表",
+    "nodes": [
+      {
+        "name": "users",
+        "process": "models.admin.user.Get",
+        "args": [{
+            "select": ["id", "name", "id as value", "name as label", "mobile"],
+            "wheres": [
+              { "column": "type", "op": "eq", "value": "staff" },
+              { "column": "status", "op": "eq", "value": "enabled" },
+              { "column": "deleted_at", "op": "eq", "value": null }
+            ]
+        }]
+      }
+    ],
+    "output": "{{$res.users}}"
+  }
+  

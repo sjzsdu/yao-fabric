@@ -1,0 +1,63 @@
+{
+    "name": "字典项",
+    "action": {
+        "bind": {
+          "model": "admin.dict_item"
+        }
+    },
+    "layout": {
+        "list": {
+          "columns": [
+            { "name": "字典项名称", "width": 6 },
+            { "name": "标签颜色", "width": 6 },
+            { "name": "权重", "width": 6 },
+            { "name": "默认选中", "width": 2.5 }
+          ]
+        }
+    },
+    "fields": {
+        "list": {
+            "字典项名称": {
+                "bind": "label",
+                "edit": {
+                    "type": "Input",
+                    "props": {
+                        "placeholder": "字典项名称,必填",
+                        "itemProps": {
+                            "rules": [{ "required": true }]
+                        }
+                    }
+                }
+            },
+            "标签颜色": {
+                "bind": "color",
+                "edit": {
+                    "type": "ColorPicker",
+                    "props": {}
+                }
+            },
+            "权重": {
+                "bind": "weight",
+                "edit": {
+                    "type": "InputNumber",
+                    "props": {
+                        "placeholder": "权重,可空"
+                    }
+                }
+            },
+            "默认选中": {
+                "bind": "status",
+                "edit": {
+                    "bind": "status",
+                    "props": {
+                        "checkedValue": true,
+                        "unCheckedValue": false,
+                        "checkedChildren": "选中",
+                        "unCheckedChildren": "不选"
+                    },
+                    "type": "Switch"
+                }
+            }
+        }
+    }
+}

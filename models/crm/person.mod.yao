@@ -1,0 +1,87 @@
+{
+    "name": "联系人",
+    "table": {
+        "name": "person",
+        "comment": "联系人",
+        "engine": "InnoDB"
+    },
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "ID",
+            "comment": "ID"
+        },
+        {
+            "label": "姓名",
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "comment": "姓名",
+            "unique": true
+        },
+        {
+            "label": "手机号",
+            "name": "mobile",
+            "type": "string",
+            "length": 100,
+            "comment": "手机号",
+            "nullable": true
+        },
+        {
+            "label": "微信号",
+            "name": "wechat",
+            "type": "string",
+            "length": 100,
+            "comment": "微信号",
+            "nullable": true
+        },
+        {
+            "label": "邮箱",
+            "name": "email",
+            "type": "string",
+            "length": 100,
+            "comment": "邮箱",
+            "nullable": true
+        },
+        {
+            "label": "地区",
+            "name": "area",
+            "type": "json",
+            "comment": "地区",
+            "nullable": true
+        },
+        {
+            "label": "地址",
+            "name": "address",
+            "type": "string",
+            "length": 255,
+            "comment": "地址",
+            "nullable": true
+        },
+        {
+            "label": "公司",
+            "name": "company_id",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "label": "Tags",
+            "name": "tags",
+            "type": "json",
+            "comment": "Tags",
+            "nullable": true
+        }
+    ],
+    "relations": {
+        "company": {
+            "name": "company",
+            "type": "hasOne",
+            "model": "crm.company",
+            "key": "id",
+            "foreign": "company_id",
+            "query": {}
+        }
+    },
+    "option": { "timestamps": true, "soft_deletes": true, "data_rule": true }
+}

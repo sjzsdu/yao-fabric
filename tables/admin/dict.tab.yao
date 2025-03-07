@@ -1,0 +1,210 @@
+{
+    "name": "字典管理",
+    "rule": "sys_dict",
+    "action": {
+        "bind": {
+            "model": "admin.dict",
+            "option": { 
+                "form": "admin.dict"
+            }
+        },
+        "search": {
+            "default": [
+              {
+                "orders": [
+                  {
+                    "column": "order",
+                    "option": "desc"
+                  }
+                ]
+              },
+              1,
+              10
+            ]
+        },
+        "after:search": "scripts.admin.dict.AfterSearch"
+    },
+    "layout": {
+        "primary": "id",
+        "header": {
+            "preset": {},
+            "actions": []
+        },
+        "filter": {
+            "columns": [
+                {
+                  "name": "字典名称",
+                  "width": 4
+                }
+            ],
+            "actions": [
+                {
+                  "icon": "icon-plus",
+                  "width": 3,
+                  "props": {
+                    "rule_id": "sys_dict_add"
+                  },
+                  "action": [
+                    {
+                      "name": "add",
+                      "type": "Common.openModal",
+                      "payload": {
+                        "width": 1000,
+                        "Form": {
+                          "type": "edit",
+                          "model": "admin.dict"
+                        }
+                      }
+                    }
+                  ],
+                  "title": "添加"
+                }
+            ]
+        },
+        "table": {
+            "columns": [
+                {
+                    "name": "ID",
+                    "width": 100
+                },
+                {
+                    "name": "字典名称",
+                    "width": 150
+                },
+                {
+                    "name": "备注",
+                    "width": 250
+                },
+                {
+                    "name": "字典项",
+                    "width": 250
+                },
+                {
+                    "name": "排序",
+                    "width": 100
+                }
+            ],
+            "operation": {
+                "fold": false,
+                "width": 100,
+                "actions": [
+                  {
+                    "title": "查看",
+                    "icon": "icon-eye",
+                    "action": [
+                      {
+                        "name": "view",
+                        "type": "Common.openModal",
+                        "payload": {
+                          "Form": { "type": "view", "model": "admin.dict" }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "title": "编辑",
+                    "icon": "icon-edit-2",
+                    "props": {
+                      "rule_id": "sys_dict_edit"
+                    },
+                    "action": [
+                      {
+                        "name": "edit",
+                        "type": "Common.openModal",
+                        "payload": {
+                          "Form": { "type": "edit", "model": "admin.dict" },
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "icon": "icon-trash-2",
+                    "props": {
+                      "rule_id": "sys_dict_del"
+                    },
+                    "style": "danger",
+                    "action": [
+                      {
+                        "name": "del",
+                        "type": "Table.delete",
+                        "payload": {}
+                      }
+                    ],
+                    "confirm": {
+                      "title": "提示",
+                      "desc": "确认删除，删除后数据无法恢复？"
+                    },
+                    "title": "删除"
+                  }
+                ]
+              } 
+        }
+    },
+    "fields": {
+        "filter": {
+            "字典名称": {
+              "bind": "where.name.match",
+              "edit": {
+                "type": "Input",
+                "compute": "Trim",
+                "props": {
+                  "placeholder": "请输入字典名称搜索"
+                }
+              }
+            }
+        },
+        "table": {
+            "ID": {
+                "bind": "id",
+                "view": {
+                  "type": "Text"
+                }
+            },
+            "字典名称": {
+                "bind": "name",
+                "view": {
+                  "type": "Text"
+                },
+                "edit": {
+                  "type": "Input",
+                  "bind": "name"
+                }
+            },
+            "字典项": {
+                "bind": "items",
+                "view": {
+                  "type": "Tag",
+                  "props": {}
+                }
+            },
+            "备注": {
+                "bind": "remark",
+                "view": {
+                  "type": "Text",
+                  "props": {}
+                },
+                "edit": {
+                    "type": "TextArea",
+                    "props": {}
+                  }
+            },
+            "排序": {
+                "bind": "order",
+                "view": {
+                  "type": "Text",
+                  "props": {}
+                },
+                "edit": {
+                  "props": {
+                    "type": "number"
+                  },
+                  "type": "Input",
+                  "bind": "order"
+                }
+            }
+        }
+    },
+    "config": {
+      "full": false
+    }
+}

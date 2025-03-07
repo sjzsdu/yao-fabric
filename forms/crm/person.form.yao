@@ -1,0 +1,201 @@
+{
+    "name": "联系人",
+    "action": {
+        "bind": {
+          "model": "crm.person",
+          "option": {}
+        },
+        "before:save": "scripts.form.BeforeSave"
+    },
+    "layout": {
+        "primary": "id",
+        "form": {
+            // "props": {
+            //   "reference": {
+            //     "flatContent": {
+            //       "name": "公司",
+            //       "defaultOpen": false,
+            //       "payload": {
+            //         "width": 500,
+            //         "Form": { "type": "edit", "model": "crm.company", "id": "3" }
+            //       }
+            //     }
+            //   }
+            // },
+            "sections": [
+                {
+                    "columns": [
+                        { "name": "姓名", "width": 12 },
+                        { "name": "公司", "width": 12 },
+                        { "name": "手机号", "width": 12 },
+                        { "name": "邮箱", "width": 12 },
+                        { "name": "微信号", "width": 12 },
+                        { "name": "地区", "width": 12 },
+                        { "name": "地址", "width": 12 },
+                        { "name": "标签", "width": 24 },
+                    ]
+                }
+            ]
+        },
+        "actions": [
+            {
+              "title": "保存",
+              "icon": "icon-check",
+              "showWhenAdd": true,
+              "style": "primary",
+              "props": {
+                "rule_id": ["crm_person_add", "crm_person_edit"]
+              },
+              "action": [
+                {
+                  "name": "Submit",
+                  "type": "Form.submit",
+                  "payload": {}
+                },
+                {
+                  "name": "Back",
+                  "type": "Common.closeModal",
+                  "payload": {}
+                }
+              ]
+            },
+            {
+              "title": "删除",
+              "icon": "icon-trash-2",
+              "showWhenAdd": false,
+              "showWhenView": true,
+              "style": "danger",
+              "props": {
+                  "rule_id": "crm_person_del"
+              },
+              "action": [
+                  {
+                      "name": "Del",
+                      "type": "Form.delete",
+                      "payload": {}
+                  },
+                  {
+                      "name": "Back",
+                      "type": "Common.closeModal",
+                      "payload": {}
+                  }
+              ],
+              "confirm": { "title": ""}
+            },
+            {
+              "title": "返回",
+              "divideLine": true,
+              "showWhenAdd": true,
+              "showWhenView": true,
+              "icon": "icon-arrow-left",
+              "action": [
+                {
+                  "name": "closeModal",
+                  "type": "Common.closeModal",
+                  "payload": {}
+                }
+              ]
+            }
+        ]
+    },
+    "fields": {
+        "form": {
+            "联系人": {
+                "bind": "name",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "itemProps": {
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ]
+                    },
+                    "placeholder": "联系人"
+                  }
+                }
+            },
+            "手机号": {
+                "bind": "mobile",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "手机号"
+                  }
+                }
+            },
+            "微信号": {
+                "bind": "wechat",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "微信号"
+                  }
+                }
+            },
+            "邮箱": {
+                "bind": "email",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "邮箱"
+                  }
+                }
+            },
+            "标签": {
+              "bind": "tags",
+              "edit": {
+                "type": "CheckboxGroup",
+                "props": {
+                  "xProps": {
+                    "$remote": {
+                      "process": "scripts.admin.dict.Select",
+                      "query": { "name": "联系人标签" }
+                    },
+                    "nocache": true
+                  }
+                }
+              }
+            },
+            "公司": {
+                "bind": "company_id",
+                "edit": {
+                  "type": "Relation",
+                    "props": {
+                        "placeholder": "请选择公司",
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.crm.company.Select",
+                                "query": {}
+                            }
+                        },
+                        "model": "crm.company",
+                        "selectMode": "single",
+                        "accessSelect": {
+                          "rule_id": "crm_company"
+                        },
+                        "accessAdd": {
+                          "rule_id": "crm_company_add"
+                        }
+                    }
+                }
+            },
+            "地区": {
+                "bind": "area",
+                "edit": {
+                    "type": "Cascader"
+                }
+            },
+            "地址": {
+                "bind": "address",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "地址"
+                  }
+                }
+            }
+        }
+    }
+}

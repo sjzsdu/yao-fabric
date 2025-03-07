@@ -1,0 +1,145 @@
+{
+    "name": "字典",
+    "action": {
+        "bind": {
+            "model": "admin.dict",
+            "option": {}
+        }
+    },
+    "layout": {
+        "primary": "id",
+        "form": {
+            "sections": [
+                {
+                    "columns": [
+                        {
+                            "name": "字典名称",
+                            "width": 12
+                        },
+                        {
+                            "name": "排序",
+                            "width": 12
+                        },
+                        {
+                            "name": "备注",
+                            "width": 24
+                        },
+                        {
+                            "name": "字典项",
+                            "width": 24
+                        }
+                    ]
+                }
+            ],
+            "props": {}
+        },
+        "actions": [
+            {
+                "title": "保存",
+                "icon": "icon-check",
+                "showWhenAdd": true,
+                "style": "primary",
+                "props": {
+                    "rule_id": ["sys_dict_add", "sys_dict_edit"]
+                },
+                "action": [
+                    {
+                        "name": "Submit",
+                        "type": "Form.submit",
+                        "payload": {}
+                    },
+                    {
+                        "name": "Back",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            },
+            {
+                "title": "删除",
+                "icon": "icon-trash-2",
+                "showWhenAdd": false,
+                "style": "danger",
+                "props": {
+                    "rule_id": "sys_dict_del"
+                },
+                "action": [
+                    {
+                        "name": "Del",
+                        "type": "Form.delete",
+                        "payload": {}
+                    },
+                    {
+                        "name": "Back",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            },
+            {
+                "title": "返回",
+                "divideLine": true,
+                "showWhenAdd": true,
+                "showWhenView": true,
+                "icon": "icon-arrow-left",
+                "action": [
+                    {
+                        "name": "closeModal",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            }
+        ]
+    },
+    "fields": {
+        "form": {
+            "字典名称": {
+                "bind": "name",
+                "edit": {
+                    "type": "Input",
+                    "props": {
+                        "required": true,
+                        "itemProps": {
+                            "rules": [{ "required": true }]
+                        }
+                    }
+                }
+            },
+            "备注": {
+                "edit": {
+                    "type": "TextArea",
+                    "props": {
+                        "maxLength": 1024,
+                        "autoSize": { "minRows": 2, "maxRows": 6 }
+                    }
+                },
+                "bind": "remark"
+            },
+            "字典项": {
+                "bind": "items",
+                "edit": {
+                    "type": "List",
+                    "props": {
+                        "name": "dict_item",
+                        "showLabel": false
+                    }
+                }
+            },
+            "排序": {
+                "bind": "order",
+                "view": {
+                    "type": "Text",
+                    "props": {}
+                },
+                "edit": {
+                    "props": {
+                        "type": "number"
+                    },
+                    "type": "Input",
+                    "bind": "order"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,235 @@
+{
+  "name": "员工",
+  "action": {
+    "bind": {
+      "model": "admin.user",
+      "option": {}
+    },
+    "after:save": "scripts.admin.user.AfterSave",
+    "before:save": "scripts.admin.user.BeforeSave"
+  },
+  "layout": {
+    "primary": "id",
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "name": "姓名",
+              "width": 12
+            },
+            {
+              "name": "类型",
+              "width": 12
+            },
+            {
+              "name": "部门",
+              "width": 12
+            },
+            {
+              "name": "角色",
+              "width": 12
+            },
+            {
+              "name": "邮箱",
+              "width": 12
+            },
+            {
+              "name": "手机号",
+              "width": 12
+            },
+            {
+              "name": "身份证号",
+              "width": 12
+            },
+            {
+              "name": "登录密码",
+              "width": 12
+            },
+            {
+              "name": "扩展信息",
+              "width": 12
+            },
+            {
+              "name": "状态",
+              "width": 12
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "actions": [
+      {
+        "title": "保存",
+        "icon": "icon-check",
+        "showWhenAdd": true,
+        "style": "primary",
+        "disabled": {
+          "value": "true",
+          "field": "allMenu"
+        },
+        "props": {
+          "rule_id": ["sys_user_add", "sys_user_edit"]
+        },
+        "action": [
+          {
+            "name": "Submit",
+            "type": "Form.submit",
+            "payload": {}
+          },
+          {
+            "name": "Back",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      },
+      {
+        "title": "返回",
+        "divideLine": true,
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "icon": "icon-arrow-left",
+        "action": [
+          {
+            "name": "closeModal",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      }
+    ]
+  },
+  "fields": {
+    "form": {
+      "姓名": {
+        "bind": "name",
+        "edit": {
+          "type": "Input",
+          "props": {
+            "itemProps": {
+                "rules": [{ "required": true }]
+            }
+          }
+        }
+      },
+      "手机号": {
+        "bind": "mobile",
+        "edit": {
+          "type": "Input",
+          "props": {
+            "itemProps": {
+              "rules": [{ "required": true }]
+            }
+          }
+        }
+      },
+      "邮箱": {
+        "bind": "email",
+        "edit": {
+          "type": "Input",
+          "props": {
+            "itemProps": {
+              "rules": [{ "required": true }]
+            }
+          }
+        }
+      },
+      "身份证号": {
+        "bind": "idcard",
+        "edit": {
+          "type": "Input"
+        }
+      },
+      "登录密码": {
+        "bind": "password",
+        "edit": {
+          "type": "Input"
+        }
+      },
+      "类型": {
+        "bind": "type",
+        "edit": {
+          "type": "RadioGroup",
+          "props": {
+            "options": [
+              {
+                "label": "员工",
+                "value": "staff"
+              },
+              {
+                "label": "用户",
+                "value": "user"
+              },
+              {
+                "label": "机器人",
+                "value": "ro'bo't"
+              }
+            ]
+          }
+        }
+      },
+      "部门": {
+        "bind": "department_ids",
+        "edit": {
+          "type": "TreeSelect",
+          "bind": "department_ids",
+          "props": {
+            "multiple": true,
+            "props": {
+              "itemProps": {
+                "rules": [{ "required": true }]
+              }
+            },
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.department.TreeSelect",
+                "query": {}
+              }
+            }
+          }
+        }
+      },
+      "角色": {
+        "bind": "role_ids",
+        "edit": {
+          "type": "Select",
+          "props": {
+            "mode": "multiple",
+            "props": {
+              "itemProps": {
+                "rules": [{ "required": true }]
+              }
+            },
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.role.Select",
+                "query": {}
+              },
+              "nocache": true
+            }
+          }
+        }
+      },
+      "状态": {
+        "bind": "status",
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "label": "启用",
+                "value": "enabled"
+              },
+              {
+                "label": "停用",
+                "value": "disabled"
+              }
+            ]
+          },
+          "type": "RadioGroup"
+        }
+      }
+    }
+  }
+}

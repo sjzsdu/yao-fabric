@@ -1,0 +1,37 @@
+{
+    "title": "导入面料",
+    "process": "scripts.product.fabric.Import",
+    "output": "scripts.product.fabric.Output",
+    "columns": [
+      {
+        "label": "面料名称",
+        "name": "name",
+        "field": "name",
+        "match": ["面料", "名称", "面料名称", "品号", "name"],
+        "rules": []
+      },
+      {
+        "label": "门幅",
+        "name": "width",
+        "field": "width",
+        "match": ["门幅", "幅宽", "width"],
+        "rules": []
+      },
+      {
+        "label": "克重",
+        "name": "weight",
+        "field": "weight",
+        "match": ["克重", "gender"],
+        "rules": []
+      }
+    ],
+    "option": {
+      "chunkSize": 200,
+      "mappingPreview": "auto",
+      "dataPreview": "auto",
+      "useTemplate": true,
+      "templateLink": "/fabric.xlsx"
+    },
+    "rules": {}
+  }
+  

@@ -1,0 +1,48 @@
+{
+    "name": "任务管理",
+    "table": {
+        "name": "person",
+        "comment": "联系人",
+        "engine": "InnoDB"
+    },
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "ID",
+            "comment": "ID"
+        },
+        {
+            "label": "任务名称",
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "comment": "任务名称",
+            "unique": true
+        },
+        {
+            "label": "任务详情",
+            "name": "remark",
+            "type": "string",
+            "length": 100,
+            "comment": "任务详情"
+        },
+        {
+            "label": "任务资料",
+            "name": "images",
+            "type": "json",
+            "comment": "任务资料",
+            "nullable": true
+        }
+    ],
+    "relations": {
+        "company": {
+            "type": "hasOne",
+            "model": "crm.company",
+            "key": "id",
+            "foreign": "company_id",
+            "query": {}
+        }
+    },
+    "option": { "timestamps": true, "soft_deletes": true, "data_rule": true }
+}

@@ -1,0 +1,232 @@
+{
+    "name": "跟进表",
+    "action": {
+        "bind": {
+            "model": "crm.follow",
+            "option": { 
+                "withs": {
+                    "company": { "query": { "select": ["id", "name"] }},
+                    "person": { "query": { "select": ["id", "name"] }},
+                    "user": { "query": { "select": ["id", "name"] }},
+                    "department": { "query": { "select": ["id", "name"] }}
+                },
+                "form": "crm.follow"
+            }
+        },
+        "search": {
+            "default": [{ "orders": [{ "column": "id", "option": "desc" }]}, 1, 10]
+        }
+    },
+
+    "layout": {
+        "primary": "id",
+        "header": {
+            "preset": {
+                "column": {
+                    "musts": ["name", "company_id", "person_id"]
+                },
+                "filter": {
+                    "musts": ["name", "company_id"]
+                }
+            }
+        },
+        "filter": {
+            "columns": [
+                {
+                    "name": "标题",
+                    "width": 4
+                },
+                {
+                    "name": "公司",
+                    "width": 6
+                },
+                {
+                    "name": "详情",
+                    "width": 4
+                }
+            ],
+            "actions": [
+                {
+                    "title": "添加跟进",
+                    "icon": "icon-plus",
+                    "width": 3,
+                    "props": {
+                        "rule_id": "crm_follow_add"
+                    },
+                    "action": [
+                        {
+                            "name": "add",
+                            "type": "Common.openModal",
+                            "payload": {
+                                "Form": { "type": "edit", "model": "crm.follow" }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "table": {
+            "columns": [
+                { "name": "ID", "width": 80 },
+                { "name": "标题", "width": 100 },
+                { "name": "公司", "width": 160 },
+                { "name": "联系人", "width": 160 },
+                { "name": "快照", "width": 160 },
+                { "name": "负责人", "width": 100 },
+                { "name": "部门", "width": 100 }
+            ],
+            "operation": {
+                "fold": false,
+                "width": 100,
+                "actions": [
+                    {
+                        "title": "查看",
+                        "icon": "icon-eye",
+                        "props": {
+                            "rule_id":  "crm_follow_view"
+                        },
+                        "action": [
+                            {
+                                "name": "view",
+                                "type": "Common.openModal",
+                                "payload": {
+                                  "Form": { "type": "view", "model": "crm.follow" }
+                                }
+                            }
+                        ]
+                      },
+                      {
+                        "title": "编辑",
+                        "icon": "icon-edit-2",
+                        "props": {
+                            "rule_id":  "crm_follow_edit"
+                        },
+                        "action": [
+                            {
+                                "name": "edit",
+                                "type": "Common.openModal",
+                                "payload": {
+                                  "Form": { "type": "edit", "model": "crm.follow" }
+                                }
+                            }
+                        ]
+                      },
+                      {
+                        "icon": "icon-trash-2",
+                        "props": {
+                            "rule_id":  "crm_follow_del"
+                        },
+                        "action": [
+                            {
+                                "name": "del",
+                                "type": "Table.delete",
+                                "payload": {}
+                            }
+                        ],
+                        "style": "danger",
+                        "confirm": {
+                          "title": "提示",
+                          "desc": "确认删除，删除后数据无法恢复？"
+                        },
+                        "title": "删除"
+                      }
+                ]
+            }
+        }
+    },
+
+    "fields": {
+        "filter": {
+            "标题": {
+                "bind": "where.name.match",
+                "edit": {
+                  "type": "Input",
+                  "compute": "Trim",
+                  "props": {
+                    "placeholder": "请输入标题搜索"
+                  }
+                }
+            },
+            "公司": {
+                "bind": "where.company_id.match",
+                "edit": {
+                  "type": "Relation",
+                  "props": {
+                        "placeholder": "请选择公司",
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.crm.company.Select",
+                                "query": {}
+                            }
+                        },
+                        "model": "crm.company",
+                        "selectMode": "single",
+                        "noAdd": true,
+                        "accessSelect": {
+                            "rule_id":  "crm_comp"
+                        },
+                        "accessAdd": {
+                            "rule_id": "crm_comp_add"
+                        }
+                    }
+                }
+            },
+            "备注": {
+                "bind": "where.remark.match",
+                "edit": {
+                  "type": "Input",
+                  "compute": "Trim",
+                  "props": {
+                    "placeholder": "请输入备注搜索"
+                  }
+                }
+            }
+        },
+        "table": {
+            "ID": {
+                "bind": "id",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "备注": {
+                "bind": "name",
+                "view": {
+                    "type": "Text"
+                }
+            },
+            "公司": {
+                "bind": "company_id",
+                "view": {
+                    "bind": "company.name",
+                    "type": "Text"
+                }
+            },
+            "联系人": {
+                "bind": "person_id",
+                "view": {
+                    "bind": "person.name",
+                    "type": "Text"
+                }
+            },
+            "负责人": {
+                "bind": "user_id",
+                "view": {
+                    "bind": "user.name",
+                    "type": "Text"
+                },
+            },
+            "部门": {
+                "bind": "department_id",
+                "view": {
+                    "bind": "department.name",
+                    "type": "Text"
+                },
+            },
+            "快照": {
+                "bind": "images",
+                "view": { "type": "Image", "compute": "Download", "bind": "images" }
+            }
+        }
+    }
+}

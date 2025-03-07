@@ -1,0 +1,16 @@
+{
+    "name": "通用接口",
+    "version": "1.0.0",
+    "description": "通用接口API接口",
+    "guard": "bearer-jwt",
+    "paths": [
+      {
+        "path": "cosToken",
+        "method": "GET",
+        "process": "scripts.helper.cosToken",
+        "in": [],
+        "out": { "status": 200, "type": "application/json" }
+      }
+    ]
+}
+  

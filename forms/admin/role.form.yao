@@ -1,0 +1,172 @@
+{
+    "name": "角色",
+    "action": {
+        "bind": {
+            "model": "admin.role",
+            "option": {}
+        },
+        "after:find": "scripts.admin.role.AfterFind"
+    },
+    "layout": {
+        "primary": "id",
+        "form": {
+            "sections": [
+                {
+                    "columns": [
+                        {
+                            "name": "角色名称",
+                            "width": 12
+                        },
+                        {
+                            "name": "排序",
+                            "width": 12
+                        },
+                        {
+                            "name": "状态",
+                            "width": 12
+                        },
+                        {
+                            "name": "备注",
+                            "width": 24
+                        },
+                        {
+                            "name": "数据权限",
+                            "width": 24
+                        },
+                        {
+                            "name": "操作权限",
+                            "width": 24
+                        }
+                    ]
+                }
+            ],
+            "props": {}
+        },
+        "actions": [
+            {
+                "title": "保存",
+                "icon": "icon-check",
+                "showWhenAdd": true,
+                "style": "primary",
+                "disabled": {
+                    "value": "true",
+                    "field": "allMenu"
+                },
+                "props": {
+                    "rule_id": ["sys_role_add", "sys_role_edit"]
+                },
+                "action": [
+                    {
+                        "name": "Submit",
+                        "type": "Form.submit",
+                        "payload": {}
+                    },
+                    {
+                        "name": "Back",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            },
+            {
+                "title": "返回",
+                "divideLine": true,
+                "showWhenAdd": true,
+                "showWhenView": true,
+                "icon": "icon-arrow-left",
+                "action": [
+                    {
+                        "name": "closeModal",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            }
+        ]
+    },
+    "fields": {
+        "form": {
+            "角色名称": {
+                "bind": "name",
+                "edit": {
+                    "type": "Input"
+                }
+            },
+            "备注": {
+                "edit": {
+                    "type": "TextArea",
+                    "props": {
+                        "maxLength": 1024,
+                        "autoSize": { "minRows": 2, "maxRows": 6 }
+                    }
+                },
+                "bind": "remark"
+            },
+            "数据权限": {
+                "bind": "data",
+                "edit": {
+                    "type": "RadioGroup",
+                    "props": {
+                        "placeholder": "请选择数据权限",
+                        "options": [
+                            {
+                                "label": "所有数据",
+                                "value": "all"
+                            },
+                            {
+                                "label": "个人数据",
+                                "value": "self"
+                            },
+                            {
+                                "label": "部门数据",
+                                "value": "department"
+                            }
+                        ]
+                    }
+                }
+            },
+            "操作权限": {
+                "bind": "rule_ids",
+                "edit": {
+                    "type": "Tree",
+                    "props": {
+                        "xProps": {
+                            "nocache" : true,
+                            "$remote": {
+                                "process": "scripts.admin.rule.Tree",
+                                "query": { "status": 1}
+                            }
+                        }
+                    }
+                }
+            },
+            "状态": {
+                "bind": "status",
+                "edit": {
+                    "bind": "status",
+                    "props": {
+                        "checkedValue": 1,
+                        "unCheckedValue": 0,
+                        "checkedChildren": "开启",
+                        "unCheckedChildren": "关闭"
+                    },
+                    "type": "Switch"
+                }
+            },
+            "排序": {
+                "bind": "order",
+                "view": {
+                    "type": "Text",
+                    "props": {}
+                },
+                "edit": {
+                    "props": {
+                        "type": "number"
+                    },
+                    "type": "Input",
+                    "bind": "order"
+                }
+            }
+        }
+    }
+}

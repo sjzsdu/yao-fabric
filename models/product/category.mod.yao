@@ -1,0 +1,100 @@
+{
+    "name": "::Fabric Category",
+    "table": {
+      "name": "fabric_category",
+      "comment": "::Fabric Category"
+    },
+    "columns": [
+      {
+        "label": "ID",
+        "name": "id",
+        "type": "ID",
+        "comment": "ID",
+        "primary": true
+      },
+      {
+        "label": "::Parent Id",
+        "name": "parent_id",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "label": "::Name",
+        "name": "name",
+        "type": "string",
+        "length": 128,
+        "index": true
+      },
+      {
+        "label": "::Description",
+        "name": "description",
+        "type": "string",
+        "nullable": true,
+        "length": 1024
+      },
+      {
+        "label": "排序",
+        "name": "order",
+        "type": "integer",
+        "comment": "排序越大越靠前",
+        "default": 1
+      }
+    ],
+    "relations": {
+      "fabric": {
+        "type": "hasMany",
+        "model": "product.fabric",
+        "key": "category_id",
+        "foreign": "id",
+        "query": {}
+      },
+      "parent": {
+        "type": "hasOne",
+        "model": "product.category",
+        "key": "id",
+        "foreign": "parent_id",
+        "query": {}
+      }
+    },
+    "option": {
+      "timestamps": true,
+      "soft_deletes": true
+    },
+    "values": [
+      {
+        "id": 1,
+        "parent_id": null,
+        "name": "针织类"
+      },
+      {
+        "id": 2,
+        "parent_id": 1,
+        "name": "单面"
+      },
+      {
+        "id": 3,
+        "parent_id": 1,
+        "name": "双面"
+      },
+      {
+        "id": 4,
+        "parent_id": null,
+        "name": "梭织"
+      },
+      {
+        "id": 5,
+        "parent_id": 4,
+        "name": "平纹"
+      },
+      {
+        "id": 6,
+        "parent_id": 4,
+        "name": "罗纹"
+      },
+      {
+        "id": 7,
+        "parent_id": 4,
+        "name": "斜纹"
+      }
+    ]
+  }

@@ -1,0 +1,68 @@
+{
+    "name": "跟进",
+    "table": {
+        "name": "follow",
+        "comment": "跟进表",
+        "engine": "InnoDB"
+    },
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "ID",
+            "comment": "ID"
+        },
+        {
+            "label": "标题",
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "comment": "标题",
+            "unique": true
+        },
+        {
+            "label": "详情",
+            "name": "remark",
+            "type": "string",
+            "length": 1024,
+            "comment": "详情",
+            "nullable": true
+        },
+        {
+            "label": "公司",
+            "name": "company_id",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "label": "联系人",
+            "name": "person_id",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "label": "快照",
+            "name": "images",
+            "type": "json",
+            "comment": "快照",
+            "nullable": true
+        }
+    ],
+    "relations": {
+        "company": {
+            "type": "hasOne",
+            "model": "crm.company",
+            "key": "id",
+            "foreign": "company_id",
+            "query": {}
+        },
+        "person": {
+            "type": "hasOne",
+            "model": "crm.person",
+            "key": "id",
+            "foreign": "person_id",
+            "query": {}
+        }
+    },
+    "option": { "timestamps": true, "soft_deletes": true, "data_rule": true }
+}

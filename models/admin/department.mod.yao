@@ -1,0 +1,117 @@
+{
+    "name": "部门",
+    "table": {
+      "name": "department",
+      "comment": "部门"
+    },
+    "columns": [
+      {
+        "label": "ID",
+        "name": "id",
+        "type": "ID",
+        "comment": "ID",
+        "primary": true
+      },
+      {
+        "label": "部门名称",
+        "name": "name",
+        "type": "string",
+        "length": 50,
+        "comment": "部门名称"
+      },
+      {
+        "label": "部门职责",
+        "name": "description",
+        "type": "string",
+        "nullable": true,
+        "length": 1024
+      },
+      {
+        "label": "上级部门id",
+        "name": "parent_id",
+        "type": "integer",
+        "comment": "上级部门id,department表主键id",
+        "nullable": true
+      },
+      {
+        "label": "排序",
+        "name": "order",
+        "type": "integer",
+        "comment": "排序越大越靠前",
+        "default": 1
+      },
+      {
+        "label": "部门领导id",
+        "name": "user_id",
+        "type": "integer",
+        "comment": "部门领导id",
+        "nullable": true
+      }
+    ],
+    "relations": {
+      "children": {
+        "type": "hasMany",
+        "model": "admin.department",
+        "key": "parent_id",
+        "foreign": "id",
+        "query": {}
+      },
+      "parent": {
+        "type": "hasOne",
+        "model": "admin.department",
+        "key": "id",
+        "foreign": "parent_id",
+        "query": {}
+      },
+      "leader": {
+        "type": "hasOne",
+        "model": "admin.user",
+        "key": "id",
+        "foreign": "user_id",
+        "query": {}
+      }
+    },
+    "option": {
+      "timestamps": true,
+      "soft_deletes": true
+    },
+    "values": [
+        {
+            "id": 1,
+            "user_id": 2,
+            "name": "总经理",
+            "description": "负责公司总体的计划",
+            "order": 99,
+            "parent_id": 0
+        },
+        {
+            "id": 2,
+            "name": "市场部",
+            "description": "负责市场推广",
+            "order": 99,
+            "parent_id": 0
+        },
+        {
+            "id": 3,
+            "name": "生产部",
+            "description": "负责生产管理",
+            "order": 98,
+            "parent_id": 0
+        },
+        {
+            "id": 4,
+            "name": "行政部",
+            "description": "负责公司日常办公秩序维护等",
+            "order": 98,
+            "parent_id": 0
+        },
+        {
+            "id": 5,
+            "name": "销售部",
+            "description": "负责产品销售等",
+            "order": 98,
+            "parent_id": 0
+        }
+    ]
+  }
+  

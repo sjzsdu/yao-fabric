@@ -1,0 +1,191 @@
+{
+    "name": "部门",
+    "action": {
+        "bind": {
+            "model": "admin.department",
+            "option": {
+                "withs": { 
+                    "parent": { "query": { "select": ["id", "name"] }}, 
+                    "leader": { "query": { "select": ["id", "name"] }}
+                }
+            }
+        }
+    },
+    "layout": {
+        "form": {
+            "sections": [
+                {
+                    "columns": [
+                        {
+                            "width": 12,
+                            "name": "部门名称"
+                        },
+                        {
+                            "width": 12,
+                            "name": "排序"
+                        },
+                        {
+                            "name": "上级部门",
+                            "width": 12
+                        },
+                        {
+                            "name": "部门领导",
+                            "width": 12
+                        },
+                        {
+                            "name": "描述",
+                            "width": 24
+                        }
+                    ]
+                }
+            ]
+        },
+        "primary": "id",
+        "actions": [
+            {
+                "title": "保存",
+                "icon": "icon-check",
+                "showWhenAdd": true,
+                "style": "primary",
+                "props": {
+                    "rule_id": ["sys_dep_add", "sys_dep_edit"]
+                },
+                "action": [
+                    {
+                        "name": "Submit",
+                        "type": "Form.submit",
+                        "payload": {}
+                    },
+                    {
+                        "name": "Back",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            },
+            {
+                "title": "删除",
+                "icon": "icon-trash-2",
+                "showWhenAdd": false,
+                "style": "danger",
+                "props": {
+                    "rule_id": "sys_dep_del"
+                },
+                "action": [
+                    {
+                        "name": "Del",
+                        "type": "Form.delete",
+                        "payload": {}
+                    },
+                    {
+                        "name": "Back",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            },
+            {
+                "title": "返回",
+                "divideLine": true,
+                "showWhenAdd": true,
+                "showWhenView": true,
+                "icon": "icon-arrow-left",
+                "action": [
+                    {
+                        "name": "closeModal",
+                        "type": "Common.closeModal",
+                        "payload": {}
+                    }
+                ]
+            }
+        ]
+    },
+    "fields": {
+        "form": {
+            "部门名称": {
+                "view": {
+                    "props": {},
+                    "type": "Text"
+                },
+                "edit": {
+                    "type": "Input",
+                    "bind": "name",
+                    "props": {
+                        "itemProps": {
+                            "rules": [{ "required": true }]
+                        }
+                    }
+                },
+                "bind": "name"
+            },
+            "排序": {
+                "bind": "order",
+                "view": {
+                    "type": "Text",
+                    "props": {}
+                },
+                "edit": {
+                    "props": {
+                        "type": "number"
+                    },
+                    "type": "Input",
+                    "bind": "order"
+                }
+            },
+            "上级部门": {
+                "edit": {
+                    "props": {
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.admin.department.TreeSelect",
+                                "query": {
+                                    "excludes": "{{id}}"
+                                }
+                            },
+                            "nocache": true
+                        }
+                    },
+                    "type": "TreeSelect"
+                },
+                "bind": "parent_id",
+                "view": {
+                    "bind": "parent.name",
+                    "props": {},
+                    "type": "Text"
+                }
+            },
+            "描述": {
+                "view": {
+                    "props": {},
+                    "type": "Text"
+                },
+                "edit": {
+                    "type": "TextArea",
+                    "bind": "description",
+                    "props": {}
+                },
+                "bind": "description"
+            },
+            "部门领导": {
+                "edit": {
+                    "bind": "user_id",
+                    "props": {
+                        "xProps": {
+                            "$remote": {
+                                "process": "scripts.admin.user.Select",
+                                "query": {}
+                            }
+                        }
+                    },
+                    "type": "Select"
+                },
+                "bind": "user_id",
+                "view": {
+                    "props": {},
+                    "bind": "user.name",
+                    "type": "Text"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "name": "员工部门表",
+    "table": {
+        "name": "user_department",
+        "comment": "员工部门表"
+    },
+    "columns": [
+        {
+            "label": "员工",
+            "name": "user_id",
+            "type": "integer",
+            "comment": "员工id"
+        },
+        {
+            "label": "部门",
+            "name": "department_id",
+            "type": "integer",
+            "comment": "部门id"
+        }
+    ],
+    "relations": {
+        "user": {
+            "type": "hasOne",
+            "model": "admin.user",
+            "key": "id",
+            "foreign": "user_id",
+            "query": {}
+        },
+        "department": {
+            "type": "hasOne",
+            "model": "admin.department",
+            "key": "id",
+            "foreign": "department_id",
+            "query": {}
+        }
+    },
+    "indexes": [
+        {
+            "name": "user_department",
+            "type": "unique",
+            "columns": [
+                "user_id",
+                "department_id"
+            ]
+        }
+    ]
+}

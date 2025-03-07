@@ -1,0 +1,191 @@
+{
+  "name": "来往单位",
+  "table": {
+    "name": "company",
+    "comment": "来往单位",
+    "engine": "InnoDB"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID"
+    },
+    {
+      "label": "公司全称",
+      "name": "name",
+      "type": "string",
+      "length": 200,
+      "comment": "公司名称",
+      "unique": true
+    },
+    {
+      "label": "公司简称",
+      "name": "short_name",
+      "type": "string",
+      "length": 64,
+      "comment": "ShortName",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "电话",
+      "name": "tel",
+      "type": "string",
+      "length": 64,
+      "comment": "电话",
+      "nullable": true,
+      "unique": true
+    },
+    {
+      "label": "传真",
+      "name": "fax",
+      "type": "string",
+      "length": 64,
+      "comment": "传真",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "地区",
+      "name": "area",
+      "type": "json",
+      "comment": "地区",
+      "nullable": true
+    },
+    {
+      "label": "地址",
+      "name": "address",
+      "type": "string",
+      "length": 255,
+      "comment": "地址",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "Longitude",
+      "name": "lng",
+      "type": "unsignedDecimal",
+      "precision": 12,
+      "scale": 6,
+      "comment": "Longitude",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "Latitude",
+      "name": "lat",
+      "type": "unsignedDecimal",
+      "comment": "Latitude",
+      "precision": 12,
+      "scale": 6,
+      "nullable": true,
+      "index": true
+    },
+    {
+        "label": "类型",
+        "name": "type",
+        "type": "enum",
+        "option": ["customer", "supplier"],
+        "comment": "公司类型 customer 客户, supplier 供应商",
+        "default": "customer",
+        "index": true,
+        "validations": [
+          {
+            "method": "typeof",
+            "args": ["string"],
+            "message": "{{input}}类型错误, {{label}}应该为字符串"
+          },
+          {
+            "method": "enum",
+            "args": ["customer", "supplier"],
+            "message": "{{input}}不在许可范围, {{label}}应该为 customer/supplier"
+          }
+        ]
+    },
+    {
+      "label": "LOGO",
+      "name": "logo",
+      "type": "json",
+      "comment": "LOGO",
+      "nullable": true
+    },
+    {
+        "label": "图集",
+        "name": "images",
+        "type": "json",
+        "comment": "图集",
+        "nullable": true
+    },
+    {
+      "label": "简介",
+      "name": "summary",
+      "type": "string",
+      "length": 1024,
+      "comment": "简介",
+      "nullable": true
+    },
+    {
+        "label": "营业执照",
+        "name": "credit_code",
+        "type": "string",
+        "length": 200,
+        "comment": "营业执照",
+        "nullable": true
+    },
+    {
+        "label": "税务登记号",
+        "name": "tax_code",
+        "type": "string",
+        "length": 200,
+        "comment": "税务登记号",
+        "nullable": true
+    },
+    {
+        "label": "银行账户",
+        "name": "bank_code",
+        "type": "string",
+        "length": 200,
+        "comment": "银行账户",
+        "nullable": true
+    },
+    {
+        "label": "开户行",
+        "name": "bank_name",
+        "type": "string",
+        "length": 200,
+        "comment": "开户行",
+        "nullable": true
+    },
+    {
+      "label": "网址",
+      "name": "link",
+      "type": "string",
+      "length": 200,
+      "comment": "网址",
+      "nullable": true
+    },
+    {
+      "label": "Tags",
+      "name": "tags",
+      "type": "json",
+      "comment": "Tags",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "persons": {
+        "type": "hasMany",
+        "model": "crm.person",
+        "key": "company_id",
+        "foreign": "id",
+        "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true,
+    "data_rule": true
+  }
+}

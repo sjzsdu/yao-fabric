@@ -1,0 +1,99 @@
+{
+    "name": "角色",
+    "table": {
+        "name": "role",
+        "comment": "角色"
+    },
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "ID",
+            "comment": "ID",
+            "primary": true
+        },
+        {
+            "label": "角色名称",
+            "name": "name",
+            "type": "string",
+            "length": 50,
+            "comment": "角色名称"
+        },
+        {
+            "label": "备注",
+            "name": "remark",
+            "type": "string",
+            "nullable": true,
+            "length": 1024
+        },
+        {
+            "label": "操作权限",
+            "name": "rule_ids",
+            "type": "json",
+            "nullable": true,
+            "length": 1024
+        },
+        {
+            "label": "状态",
+            "name": "status",
+            "type": "boolean",
+            "default": true,
+            "comment": "状态 true 启用 false 停用"
+        },
+        {
+            "label": "排序",
+            "name": "order",
+            "type": "integer",
+            "comment": "排序越大越靠前",
+            "default": 1
+        },
+        {
+            "label": "数据权限",
+            "name": "data",
+            "type": "enum",
+            "default": "all",
+            "option": [
+                "all",
+                "self",
+                "department"
+            ],
+            "comment": "数据权限: all 所有数据, self 自己数据, department 部门数据",
+            "index": true,
+            "validations": [
+                {
+                    "method": "typeof",
+                    "args": [
+                        "string"
+                    ],
+                    "message": "{{input}}类型错误, {{label}}应该为字符串"
+                },
+                {
+                    "method": "enum",
+                    "args": [
+                        "all",
+                        "self",
+                        "department"
+                    ],
+                    "message": "{{input}}不在许可范围, {{label}}应该为 all/self/department"
+                }
+            ]
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "values": [
+        {
+            "id": 1,
+            "name": "管理员",
+            "remark": "拥有所有的权限",
+            "rule_ids": [
+                "*"
+            ],
+            "status": true,
+            "data": "all",
+            "order": 99
+        }
+    ]
+}

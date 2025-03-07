@@ -1,0 +1,247 @@
+{
+  "name": "面料",
+  "action": {
+    "bind": {
+      "model": "product.fabric",
+      "option": {}
+    }
+  },
+  "layout": {
+    "actions": [
+      {
+        "title": "保存",
+        "icon": "icon-check",
+        "showWhenAdd": true,
+        "style": "primary",
+        "props": {
+          "rule_id": ["pro_fab_add", "pro_fab_edit"]
+        },
+        "action": [
+          {
+            "name": "Submit",
+            "type": "Form.submit",
+            "payload": {}
+          },
+          {
+            "name": "Back",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      },
+      {
+        "title": "删除",
+        "icon": "icon-trash-2",
+        "showWhenAdd": false,
+        "showWhenView": true,
+        "style": "danger",
+        "props": {
+            "rule_id": "pro_fab_del"
+        },
+        "action": [
+            {
+                "name": "Del",
+                "type": "Form.delete",
+                "payload": {}
+            },
+            {
+                "name": "Back",
+                "type": "Common.closeModal",
+                "payload": {}
+            }
+        ],
+        "confirm": { "title": ""}
+      },
+      {
+        "title": "返回",
+        "divideLine": true,
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "icon": "icon-arrow-left",
+        "action": [
+          {
+            "name": "closeModal",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      }
+    ],
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 12,
+              "name": "面料名称"
+            },
+            {
+              "width": 12,
+              "name": "分类"
+            },
+            {
+              "width": 12,
+              "name": "克重"
+            },
+            {
+              "width": 12,
+              "name": "克重单位"
+            },
+            {
+              "width": 12,
+              "name": "门幅"
+            },
+            {
+              "width": 12,
+              "name": "门幅单位"
+            },
+            {
+              "width": 12,
+              "name": "负责人"
+            },
+            {
+              "width": 24,
+              "name": "面料标签"
+            },
+            {
+              "width": 24,
+              "name": "图集"
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id"
+  },
+  "fields": {
+    "form": {
+      "面料名称": {
+        "bind": "name",
+        "edit": {
+          "type": "Input",
+          "props": {
+            "itemProps": {
+              "rules": [
+                {
+                  "required": true
+                }
+              ]
+            },
+            "placeholder": "面料名称"
+          }
+        }
+      },
+      "分类": {
+        "bind": "category_id",
+        "edit": {
+          "type": "TreeSelect",
+            "props": {
+                "placeholder": "请选择分类",
+                "xProps": {
+                    "$remote": {
+                        "process": "scripts.product.category.TreeSelect",
+                        "query": {}
+                    }
+                }
+            }
+        }
+      },
+      "门幅": {
+        "bind": "width",
+        "edit": {
+          "type": "Input",
+          "props": {
+            "type": "number"
+          }
+        }
+      },
+      "门幅单位": {
+        "bind": "width_unit",
+        "edit": {
+          "type": "Select",
+          "props": {
+            "props": {
+              "itemProps": {
+                "rules": [{ "required": true }]
+              }
+            },
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.dict.Select",
+                "query": { "name": "门幅单位" }
+              },
+              "nocache": true
+            },
+            "placeholder": "请选择"
+          }
+        }
+      },
+      "克重": {
+        "bind": "weight",
+        "edit": {
+          "type": "Input",
+          "props": {
+            "type": "number"
+          }
+        }
+      },
+      "克重单位": {
+        "bind": "weight_unit",
+        "edit": {
+          "type": "Select",
+          "props": {
+            "props": {
+              "itemProps": {
+                "rules": [{ "required": true }]
+              }
+            },
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.dict.Select",
+                "query": { "name": "克重单位" }
+              },
+              "nocache": true
+            },
+            "placeholder": "请选择"
+          }
+        }
+      },
+      "面料标签": {
+        "bind": "tags",
+        "edit": {
+          "type": "CheckboxGroup",
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.admin.dict.Select",
+                "query": { "name": "面料标签" }
+              },
+              "nocache": true
+            }
+          }
+        }
+      },
+      "图集": {
+        "bind": "images",
+        "view": { "type": "Image", "compute": "Download", "bind": "images" }, // 使用 Image 组件显示已上传图片
+        "edit": {
+          "type": "Upload",
+          "compute": "Upload",
+          "props": {
+            "filetype": "image", // 上传文件类型设定为 image
+            "maxCount": 6,
+            "desc": "面料照片",
+            "cos": {
+                "tokenUrl": "/api/common/cosToken",
+                "uploadUrl": "https://yao-fabric-1252427671.cos.ap-shanghai.myqcloud.com",
+                "bucket": "yao-fabric-1252427671",
+                "region": "ap-shanghai",
+                "keyFormat": "/fabric/{date}/{hash}.{ext}"
+            }
+          }
+        }
+      }
+    }
+  }
+}

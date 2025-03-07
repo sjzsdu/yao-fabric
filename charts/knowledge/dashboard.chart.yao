@@ -1,0 +1,75 @@
+{
+    "name": "数据统计",
+    "config": { "full": false },
+    "action": { "data": { "process": "scripts.doc.AdminStat" } },
+    "layout": {
+      "operation": {
+        "actions": [
+          {
+            "title": "官网文档",
+            "icon": "icon-book",
+            "action": {
+              "Common.historyPush": { "pathname": "https://yaoapps.com/doc" }
+            }
+          }
+        ]
+      },
+      "chart": {
+        "columns": [
+          { "name": "文档数量", "width": 12 },
+          { "name": "片段数量", "width": 12 },
+          { "name": "最近7日文档更新情况", "width": 24 }
+        ]
+      }
+    },
+    "fields": {
+      "filter": {
+        "时间区间": {
+          "bind": "range",
+          "edit": { "type": "RangePicker", "props": {} }
+        }
+      },
+      "chart": {
+        "文档数量": {
+          "bind": "documents",
+          "view": { "type": "Number", "props": { "unit": "个" } }
+        },
+        "片段数量": {
+          "bind": "parts",
+          "link": "/x/Table/doc",
+          "view": { "type": "Number", "props": { "unit": "条" } }
+        },
+        "最近7日文档更新情况": {
+          "bind": "latest",
+          "view": {
+            "type": "Bar",
+            "props": {
+              "height": 240,
+              "nameKey": "day",
+              "axisLabel": { "interval": 0, "fontSize": 12 },
+              "series": [
+                {
+                  "valueKey": "count",
+                  "type": "bar",
+                  "colorBy": "data",
+                  "itemStyle": { "borderRadius": 6 },
+                  "splitLine": { "show": false },
+                  "axisLabel": { "show": false }
+                }
+              ]
+            }
+          },
+          "refer": {
+            "type": "Table",
+            "props": {
+              "columns": [
+                { "title": "日期", "dataIndex": "day" },
+                { "title": "数量", "dataIndex": "count" }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+  

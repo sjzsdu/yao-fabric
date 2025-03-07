@@ -1,0 +1,16 @@
+{
+    "name": "树形选项接口",
+    "version": "1.0.0",
+    "description": "自定义API接口",
+    "guard": "-",
+    "paths": [
+      {
+        "path": "department",
+        "method": "GET",
+        "process": "flows.admin.department",
+        "in": ["$payload.content"],
+        "out": { "status": 200, "type": "application/json" }
+      }
+    ]
+  }
+  

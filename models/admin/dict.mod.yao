@@ -1,0 +1,62 @@
+{
+    "name": "字典",
+    "table": {
+        "name": "dict",
+        "comment": "字典"
+    },
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "ID",
+            "comment": "ID",
+            "primary": true
+        },
+        {
+            "label": "字典名称",
+            "name": "name",
+            "type": "string",
+            "length": 50,
+            "comment": "字典名称"
+        },
+        {
+            "label": "备注",
+            "name": "remark",
+            "type": "string",
+            "nullable": true,
+            "length": 1024
+        },
+        {
+            "label": "字典项",
+            "name": "items",
+            "type": "json",
+            "nullable": true,
+            "length": 4096
+        },
+        {
+            "label": "排序",
+            "name": "order",
+            "type": "integer",
+            "comment": "排序越大越靠前",
+            "default": 1
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "values": [
+        {
+            "id": 1,
+            "name": "面料标签",
+            "remark": "面料标签系统，通过标签来标识面料的特点",
+            "items": [
+                { "label": "厚重" },
+                { "label": "轻薄" },
+                { "label": "秋冬" },
+                { "label": "春夏" }
+            ],
+            "order": 99
+        }
+    ]
+}

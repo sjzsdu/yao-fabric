@@ -1,0 +1,71 @@
+{
+  "name": "APP Menu",
+  "nodes": [
+    {
+      "name": "setting",
+      "process": "models.admin.menu.Get",
+      "args": [
+        {
+          "wheres": [
+            {
+              "column": "category",
+              "op": "eq",
+              "value": "setting"
+            },
+            {
+              "column": "id",
+              "op": "in",
+              "value": "{{$rule_ids}}"
+            }
+          ],
+          "orders": [{"column": "order", "option": "desc"}]
+        }
+      ]
+    },
+    {
+      "name": "settingToInt",
+      "process": "scripts.helper.AfterSearchBool2Int",
+      "args": ["{{$res.setting}}"]
+    },
+    {
+      "name": "settingTree",
+      "process": "xiang.helper.ArrayTree",
+      "args": ["{{$res.settingToInt}}", { "parent": "parent_id"}]
+    },
+    {
+      "name": "items",
+      "process": "models.admin.menu.Get",
+      "args": [
+        {
+          "wheres": [
+            {
+              "column": "category",
+              "op": "eq",
+              "value": "items"
+            },
+            {
+              "column": "id",
+              "op": "in",
+              "value": "{{$rule_ids}}"
+            }
+          ],
+          "orders": [{"column": "order", "option": "desc"}]
+        }
+      ]
+    },
+    {
+      "name": "itemsToInt",
+      "process": "scripts.helper.AfterSearchBool2Int",
+      "args": ["{{$res.items}}"]
+    },
+    {
+      "name": "itemsTree",
+      "process": "xiang.helper.ArrayTree",
+      "args": ["{{$res.itemsToInt}}", { "parent": "parent_id"}]
+    }
+  ],
+  "output": {
+    "setting": "{{$res.settingTree}}",
+    "items": "{{$res.itemsTree}}"
+  }
+}

@@ -1,0 +1,74 @@
+{
+    "label": "往来单位",
+    "version": "1.0.0",
+    "description": "公司统计",
+    "nodes": [
+      {
+        "name": "公司数量",
+        "engine": "default",
+        "query": {
+          "select": [":COUNT(id) as 数量"],
+          "from": "$company",
+          "wheres": [
+            { "field": ":DATE(created_at)", ">=": "?:$range[0]" },
+            { "field": ":DATE(created_at)", "<=": "?:$range[1]" }
+          ],
+          "first": true
+        }
+      },
+      {
+        "name": "联系人数量",
+        "engine": "default",
+        "query": {
+          "select": [":COUNT(id) as 数量"],
+          "from": "$person",
+          "first": true
+        }
+      },
+      {
+        "name": "公海数量",
+        "engine": "default",
+        "query": {
+          "select": [":COUNT(id) as 数量"],
+          "from": "$company",
+          "wheres": [
+            { "field": "user_id", "op": "null"},
+            { "or": true, "field": "user_id", "=": 0 }
+        ],
+          "first": true
+        }
+      },
+      {
+        "name": "跟进次数",
+        "engine": "default",
+        "query": {
+          "select": [":COUNT(id) as 数量"],
+          "from": "$follow",
+          "wheres": [
+            { "field": ":DATE(created_at)", ">=": "$in.range.0" },
+            { "field": ":DATE(created_at)", "<=": "$in.range.1" }
+          ],
+          "first": true
+        }
+      },
+      {
+        "name": "分布",
+        "engine": "default",
+        "query": {
+          "select": [":COUNT(id) as 数量", ":DATE(created_at) as 日期"],
+          "from": "$company",
+          "limit": 2,
+          "orders": "日期",
+          "groups": "日期"
+        }
+      }
+    ],
+    "output": {
+      "公司数量": "{{$res.公司数量.数量}}",
+      "联系人数量": "{{$res.联系人数量.数量}}",
+      "公海数量": "{{$res.公海数量.数量}}",
+      "跟进次数": "{{$res.跟进次数.数量}}",
+      "分布": "{{$res.分布}}"
+    }
+  }
+  

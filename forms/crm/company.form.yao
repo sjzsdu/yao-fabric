@@ -1,0 +1,384 @@
+{
+    "name": "往来单位",
+    "rule": "crm_comp", 
+    "action": {
+        "bind": {
+          "model": "crm.company",
+          "option": {}
+        },
+        "before:save": "scripts.form.BeforeSave"
+    },
+    "layout": {
+        "primary": "id",
+        "form": {
+            "sections": [
+                { "columns": [
+                    { "tabs": [
+                        {
+                            "title": "基本信息",
+                            "desc": "往来单位的基本信息",
+                            "columns": [
+                                {
+                                    "name": "公司简称",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "公司全称",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "地区",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "地址",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "公司类型",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "电话",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "传真",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "标签",
+                                    "width": 24
+                                }
+                            ]
+                        },
+                        {
+                            "title": "财务信息",
+                            "desc": "公司商业登记信息等",
+                            "columns": [
+                                {
+                                    "name": "营业执照",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "税务登记号",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "银行账户",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "开户行",
+                                    "width": 12
+                                }
+                            ]
+                        },
+                        {
+                            "title": "其他信息",
+                            "desc": "其他信息，包含一些logo,图集等",
+                            "columns": [
+                                {
+                                    "name": "Logo",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "网址",
+                                    "width": 12
+                                },
+                                {
+                                    "name": "图集",
+                                    "width": 12
+                                }
+                            ]
+                        },
+                        {
+                          "title": "联系人",
+                          "desc": "该公司的联系人",
+                          "columns": [
+                              {
+                                  "name": "联系人",
+                                  "width": 24
+                              }
+                          ]
+                        },
+                        {
+                          "title": "跟进记录",
+                          "desc": "对该公司跟进记录信息",
+                          "rule": "crm_follow",
+                          "columns": [
+                              {
+                                  "name": "跟进记录",
+                                  "width": 24
+                              }
+                          ]
+                        }
+                    ]}
+                ]}
+            ]
+        },
+        "actions": [
+            {
+              "title": "保存",
+              "icon": "icon-check",
+              "showWhenAdd": true,
+              "style": "primary",
+              "props": {
+                "rule_id": ["crm_comp_add", "crm_comp_edit"]
+              },
+              "action": [
+                {
+                  "name": "Submit",
+                  "type": "Form.submit",
+                  "payload": {}
+                },
+                {
+                  "name": "Back",
+                  "type": "Common.closeModal",
+                  "payload": {}
+                }
+              ]
+            },
+            {
+              "title": "删除",
+              "icon": "icon-trash-2",
+              "showWhenAdd": false,
+              "showWhenView": true,
+              "style": "danger",
+              "props": {
+                  "rule_id": "crm_comp_del"
+              },
+              "action": [
+                  {
+                      "name": "Del",
+                      "type": "Form.delete",
+                      "payload": {}
+                  },
+                  {
+                      "name": "Back",
+                      "type": "Common.closeModal",
+                      "payload": {}
+                  }
+              ],
+              "confirm": { "title": ""}
+            },
+            {
+              "title": "返回",
+              "divideLine": true,
+              "showWhenAdd": true,
+              "showWhenView": true,
+              "icon": "icon-arrow-left",
+              "action": [
+                {
+                  "name": "closeModal",
+                  "type": "Common.closeModal",
+                  "payload": {}
+                }
+              ]
+            }
+        ]
+    },
+    "fields": {
+        "form": {
+            "公司全称": {
+                "bind": "name",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "itemProps": {
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ]
+                    },
+                    "placeholder": "公司全称"
+                  }
+                }
+            },
+            "公司简称": {
+                "bind": "short_name",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "itemProps": {
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ]
+                    },
+                    "placeholder": "公司简称"
+                  }
+                }
+            },
+            "电话": {
+                "bind": "tel",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "电话"
+                  }
+                }
+            },
+            "传真": {
+                "bind": "fax",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "传真"
+                  }
+                }
+            },
+            "地区": {
+                "bind": "area",
+                "edit": {
+                    "type": "Cascader"
+                }
+            },
+            "地址": {
+                "bind": "address",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "地址"
+                  }
+                }
+            },
+            "营业执照": {
+                "bind": "credit_code",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "营业执照"
+                  }
+                }
+            },
+            "税务登记号": {
+                "bind": "tax_code",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "税务登记号"
+                  }
+                }
+            },
+            "银行账户": {
+                "bind": "bank_code",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "银行账户"
+                  }
+                }
+            },
+            "开户行": {
+                "bind": "bank_name",
+                "edit": {
+                  "type": "Input",
+                  "props": {
+                    "placeholder": "开户行"
+                  }
+                }
+            },
+            "简介": {
+              "bind": "summary",
+              "edit": {
+                "type": "TextArea",
+                "props": {
+                  "maxLength": 1024,
+                  "autoSize": { "minRows": 4, "maxRows": 8}
+                }
+              }
+            },
+            "公司类型": {
+                "bind": "type",
+                "edit": {
+                  "type": "RadioGroup",
+                    "props": {
+                        "placeholder": "请选择类型",
+                        "options": [
+                            { "label": "客户", "value": "customer", "selected": true },
+                            { "label": "供应商", "value": "supplier" }
+                        ]
+                    }
+                }
+            },
+            "标签": {
+                "bind": "tags",
+                "edit": {
+                  "type": "CheckboxGroup",
+                  "props": {
+                    "xProps": {
+                      "$remote": {
+                        "process": "scripts.admin.dict.Select",
+                        "query": { "name": "公司标签" }
+                      },
+                      "nocache": true
+                    }
+                  }
+                }
+            },
+            "图集": {
+                "bind": "images",
+                "view": { "type": "Image", "compute": "Download", "bind": "images" }, // 使用 Image 组件显示已上传图片
+                "edit": {
+                  "type": "Upload",
+                  "compute": "Upload",
+                  "props": {
+                    "filetype": "image", // 上传文件类型设定为 image
+                    "maxCount": 6,
+                    "desc": "公司资料",
+                    "cos": {
+                        "tokenUrl": "/api/common/cosToken",
+                        "uploadUrl": "https://yao-fabric-1252427671.cos.ap-shanghai.myqcloud.com",
+                        "bucket": "yao-fabric-1252427671",
+                        "region": "ap-shanghai",
+                        "keyFormat": "/company/{date}/{hash}.{ext}"
+                    }
+                  }
+                }
+            },
+            "Logo": {
+                "bind": "logo",
+                "view": { "type": "Image", "compute": "Download", "bind": "logo" }, // 使用 Image 组件显示已上传图片
+                "edit": {
+                  "type": "Upload",
+                  "compute": "Upload",
+                  "props": {
+                    "filetype": "image", // 上传文件类型设定为 image
+                    "maxCount": 1,
+                    "desc": "公司Logo",
+                    "cos": {
+                        "tokenUrl": "/api/common/cosToken",
+                        "uploadUrl": "https://yao-fabric-1252427671.cos.ap-shanghai.myqcloud.com",
+                        "bucket": "yao-fabric-1252427671",
+                        "region": "ap-shanghai",
+                        "keyFormat": "/logo/{date}/{hash}.{ext}"
+                    }
+                  }
+                }
+            },
+            "联系人": {
+              "bind": "id",
+              "edit": {
+                "type": "Table",
+                "props": {
+                  "model": "crm.person",
+                  "query": { "where.company_id.eq": "{{id}}" }
+                }
+              }
+          },
+          "跟进记录": {
+            "bind": "id",
+            "edit": {
+              "type": "Table",
+              "props": {
+                "model": "crm.follow",
+                "query": { "where.company_id.eq": "{{id}}" }
+              }
+            }
+        }
+        }
+    }
+}
