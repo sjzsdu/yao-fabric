@@ -2,7 +2,7 @@
   "name": "::Application",
   "short": "::Application Short",
   "description": "::Application Description",
-  "version": "0.10.4",
+  "version": "0.1.0",
   "adminRoot": "admin",
   "setup": "scripts.setup.Data",
   "menu": { "process": "flows.app.menu" },

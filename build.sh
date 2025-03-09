@@ -6,11 +6,18 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # 获取项目根目录路径
 PROJECT_ROOT="$( cd "$SCRIPT_DIR/." &> /dev/null && pwd )"
 
-# 检查 VERSION 环境变量，如果未设置，则使用第一个命令行参数
-if [ -z "$VERSION" ]; then
-    VERSION="$1"
+# 从 app.yao 文件中读取版本号
+APP_YAO_FILE="${PROJECT_ROOT}/app.yao"
+if [ -f "$APP_YAO_FILE" ]; then
+    VERSION=$(grep '"version":' "$APP_YAO_FILE" | sed 's/.*"version": "\(.*\)".*/\1/')
+    if [ -z "$VERSION" ]; then
+        echo "错误: 无法从 app.yao 文件中读取版本号"
+        exit 1
+    fi
+else
+    echo "错误: app.yao 文件不存在"
+    exit 1
 fi
-
 # 如果 VERSION 仍然为空，则报错并退出
 if [ -z "$VERSION" ]; then
     echo "错误: 未提供版本号。请设置 VERSION 环境变量或作为第一个参数传入。"

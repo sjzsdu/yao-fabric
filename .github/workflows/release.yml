@@ -2,9 +2,9 @@ name: Build and Publish Docker Image
 
 on:
   workflow_dispatch:
-    inputs:
-      tags:
-        description: "Version tags"
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build-and-publish:
@@ -23,13 +23,6 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and push
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        push: true
-        tags: sjzsdu/yao-fabric:latest
-
     - name: Run custom script
       run: |
         chmod +x ./build.sh
@@ -37,4 +30,4 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
-        VERSION: ${{ github.event.inputs.tags }}
+

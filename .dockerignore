@@ -1,0 +1,41 @@
+# 忽略版本控制系统文件
+.git
+.gitignore
+
+# 忽略环境文件和其他敏感配置
+.env
+*.env
+config.json
+
+# 忽略日志文件
+*.log
+
+# 忽略临时文件和缓存
+*.tmp
+.cache
+tmp/
+
+# 忽略开发工具相关文件
+.vscode/
+.idea/
+
+# 忽略测试文件和目录
+test/
+tests/
+__tests__/
+
+# 忽略文档
+docs/
+*.md
+
+# 忽略依赖目录（如果有的话）
+node_modules/
+vendor/
+
+# 忽略构建输出
+dist/
+build/
+
+# 忽略其他不需要的文件
+*.swp
+.DS_Store
