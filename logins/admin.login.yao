@@ -5,8 +5,10 @@
     "args": [":payload"]
   },
   "layout": {
-    "entry": "/x/Dashboard/kanban",
+    "entry": "/x/Chart/dashboard",
+    "captcha": "yao.utils.Captcha",
+    "cover": "/assets/images/login/cover.svg",
     "slogan": "::Make Your Dream With Yao App Engine",
-    "site": "https://yaoapps.com?from=instance-admin-login"
+    "site": "https://yaoapps.com"
   }
 }

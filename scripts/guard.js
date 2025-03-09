@@ -8,5 +8,6 @@ function Chat(path, params, query, payload, headers) {
   }
 
   let data = Process("utils.jwt.Verify", token);
+  console.log('yayaya', data);
   return { __sid: data.sid, __global: data.data };
 }

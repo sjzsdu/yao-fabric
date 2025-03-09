@@ -39,11 +39,10 @@ function Login(payload) {
 
   // 增加token等信息
   const session_id = payload.sid;
-  
   const {data, rule_ids} = getMenuIds(user.role_ids);
   user.data = data;
   user.rule_ids = rule_ids;
-  console.log(user.data, user.rule_ids)
+  console.log('login user', user, payload)
   
   const jwt = Process(
     "xiang.helper.JWTMake",
